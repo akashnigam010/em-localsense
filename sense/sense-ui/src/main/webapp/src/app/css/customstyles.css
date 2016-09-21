@@ -1,0 +1,246 @@
+@font-face {
+    font-family: 'Sense Web Font';
+    src: url('../../assets/fonts/INGMeWeb-Regular.woff') format('woff'), url('../../assets/fonts/icomoon.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Sense Bold Font';
+    src: url('../../assets/fonts/INGMeWeb-Bold.woff') format('woff'), url('../../assets/fonts/icomoon.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Sense Icon Font';
+    src: url('../../assets/fonts/ing-icon-font.woff') format('woff'), url('../../assets/fonts/icomoon.ttf') format('truetype');
+}
+
+body {
+    font-family: 'Sense Web Font', sans-serif !important;
+}
+
+.sense-bold {
+    font-family: 'Sense Bold Font', sans-serif !important;
+}
+
+.sense-icon {
+    font-family: 'Sense Icon Font', sans-serif !important;
+}
+
+
+/* md-toolbar content style */
+
+md-toolbar,
+.md-fab {
+    fill: #fff;
+}
+
+md-content {
+    background-color: #f6f6f6 !important;
+}
+
+.inputdemoErrors .inputErrorsApp {
+    min-height: 48px;
+}
+
+.inputdemoErrors md-input-container > p {
+    font-size: 0.8em;
+    text-align: left;
+    width: 100%;
+}
+
+
+/* Overlay style */
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background-color: white;
+    opacity: .9;
+}
+
+.ajax-loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -75px;
+    margin-top: -75px;
+    display: block;
+}
+
+
+/*Growl Notifications*/
+
+.growl-item.ng-enter,
+.growl-item.ng-leave {
+    -webkit-transition: .5s linear all;
+    -moz-transition: .5s linear all;
+    -o-transition: .5s linear all;
+    transition: .5s linear all
+}
+
+.growl-item.ng-enter,
+.growl-item.ng-leave.ng-leave-active {
+    opacity: 0
+}
+
+.growl-item.ng-leave,
+.growl-item.ng-enter.ng-enter-active {
+    opacity: 1
+}
+
+
+/* Sidenav selected highlight style */
+
+.nav-active {
+    background-color: lightgray;
+}
+
+
+/* Cursor Pointer style */
+
+.cursorPointer {
+    cursor: pointer;
+    outline: none;
+}
+
+.panel-body {
+    padding: 0px !important;
+    padding-top: 15px !important;
+}
+
+.item-card {
+    min-width: 85px;
+    height: 120px;
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12);
+}
+
+.item-add-button {
+    border: 0px;
+    border-radius: 4px;
+    height: 50px;
+    width: 50px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(255, 64, 129);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
+}
+
+.item-add-button:active {
+    background-color: #ff2770;
+}
+
+.item-add-button:focus {
+    outline: 0;
+}
+
+
+/*--- FontAwesome Enhancement ---*/
+
+* > .fa.fa-hover-show,
+*:hover > .fa.fa-hover-hidden {
+    display: none;
+}
+
+*:hover > .fa.fa-hover-show {
+    display: inline-block;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.card-title {
+    overflow: hidden;
+}
+
+.card-fixed-height {
+    max-height: 30px;
+}
+
+.bill-item-name {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.bill-division {
+    background: #f3f3f3;
+}
+
+.highlight-text {
+    color: green;
+    font-size: 36px;
+}
+
+.custom-card {
+    background: white;
+}
+
+.odd-row {
+    background: #f3f3f3;
+}
+
+.table {
+    min-width:90px;
+    height: 120px;    
+}
+
+.notification {
+    color:rgb(255,87,34);
+}
+
+/* potrait mode mobile */
+
+@media (max-width: 600px) {
+    .hide-mobile {
+        display: none;
+    }
+    .card-dynamic-height {
+        max-height: 60px;
+    }
+    .bar-bill-layout {
+        margin-top: 10px;
+    }
+    .bill-layout-div {
+        width: 100%;
+    }
+    .datepicker {
+        width: 100%;
+    }
+    .growl {
+        position: fixed;
+        bottom: 10px;
+        left: 25%;
+        float: right;
+        width: 50%;
+        z-index: 2
+    }
+}
+
+
+/* all other mode mobile/web */
+
+@media (min-width: 601px) {
+    .card-dynamic-height {
+        max-height: 30px;
+    }
+    .bar-bill-layout {
+        margin-left: 10px;
+    }
+    .bill-layout-div {
+        width: 50%;
+    }
+    .datepicker {
+        overflow: hidden;
+    }
+    .growl {
+        position: fixed;
+        top: 10px;
+        left: 40%;
+        float: right;
+        width: 20%;
+        z-index: 2
+    }
+}

@@ -1,0 +1,66 @@
+<div data-growl=""></div>
+<div class="col-md-12" ng-init="fetchMenu('fnb')">
+    <md-content>
+        <div layout="row">
+            <div flex>
+               <md-tabs md-selected="selectedIndex" md-dynamic-height md-border-bottom>
+                    <md-tab ng-repeat="category in categories" ng-click="getItemsFromMap(category, selectedIndex)">
+                        <md-tab-label layout="row">
+                            <span style="margin-right:20px;">{{category.name}}</span>
+                            <span style="margin-right:10px;" ng-click="updateCategory($event, category)" class="cursorPointer">
+                                <i class="fa fa-pencil"></i>
+                            </span>
+                            <span ng-click="deleteCategory($event, category)" class="cursorPointer">
+                                <i class="fa fa-times"></i>
+                            </span>
+                        </md-tab-label>
+                    </md-tab>
+                </md-tabs>  
+            </div>
+            <div>
+                <md-button ng-click="addCategory($event)" class="md-fab md-mini md-primary add-category-button" aria-label="Add">
+                    <md-tooltip md-direction="top">
+                        Add new category
+                    </md-tooltip>
+                    <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
+                </md-button>
+            </div>           
+        </div>
+        
+        <div id="subCategoryDivManageMenu">
+            <!-- <div flex layout="column" layout-padding style="background: azure;">
+                <h4 flex="80" class="panel-title">
+                  Veg                                                          
+                </h4>
+                <div layout="row" layout-wrap style="padding: 0px;">           
+                    <md-card md-whiteframe="4" flex="10" layout="column" class="item-card">
+                        <md-card-title flex="85" class="card-title">
+                            Chicken Masala
+                        </md-card-title>
+                        <md-card-actions flex="15" layout="row">
+                            <div flex>
+                                <i class="fa fa-inr" aria-hidden="true">220</i>
+                            </div>
+                            <div flex>
+                                <p align="right">2</p>
+                            </div>
+                        </md-card-actions>
+                    </md-card>
+                </div>
+            </div> -->
+        </div>
+        <div id="itemsDivManageMenu" layout="row" layout-wrap layout-padding>            
+        </div>
+        <div layout="row" layout-align="center center" ng-if="showAddSubCategoryAndItemButtons">            
+            <md-button ng-click="addSubCategory($event)" class="md-raised md-primary" aria-label="Add Subcategory">
+                Add Sub Category
+            </md-button>
+            <md-button ng-click="addItemToCategory($event)" class="md-raised md-accent" aria-label="Add item">
+                Add Item
+            </md-button>
+        </div>              
+        <md-button class="md-fab md-warn" ng-click="toggleMenu()" aria-label="toggle menu" style="bottom: 20px; position: fixed;" ng-if="isBarAvailable">
+            {{menuType == 'fnb'?'BAR':'FNB'}}
+        </md-button>
+    </md-content>
+</div>
