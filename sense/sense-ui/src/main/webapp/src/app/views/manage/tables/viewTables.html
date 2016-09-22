@@ -1,0 +1,50 @@
+<div ng-init="loadTables()">
+    <md-content>
+        <div layout-padding ng-if="seatingAreas.length == 0">
+            <p class="sense-bold">No Tables found. Please click the below button to add a new seating area.</p>
+        </div>
+        <div layout="column" layout-padding>
+            <div flex layout="column" ng-repeat="seatingArea in seatingAreas">
+                <h4 flex="80" layout="row" class="panel-title" style="width:100%;">                  
+                    <p style="margin-right:20px;">{{seatingArea.name | uppercase}}</p>
+                    <p style="margin-right:20px;" ng-click="editSeatingArea(seatingArea, $event)">
+                        <i class="fa fa-pencil fa-hover-hidden cursorPointer"></i>
+                        <i class="fa fa-pencil fa-lg fa-hover-show cursorPointer"></i></p>
+                    <p ng-click="deleteSeatingArea(seatingArea, $event)">
+                        <i class="fa fa-times fa-hover-hidden cursorPointer"></i>
+                        <i class="fa fa-times fa-lg fa-hover-show cursorPointer"></i>
+                    </p>                                                    
+                </h4>
+                <div flex layout="row" layout-wrap layout-fill style="padding-top: 5px;">
+                    <md-card layout="column" md-whiteframe="4" flex="10" ng-repeat="table in seatingArea.tables" style="min-width:90px; max-height: 120px;">
+                        <md-card-title flex="70" ng-click="editTable(table, seatingArea, $event)">
+                            <md-card-title-text>
+                                <span align="center" class="md-subhead">{{table.tableNumber}}</span>
+                            </md-card-title-text>
+                        </md-card-title>
+                        <md-card-actions flex="30" layout="row" layout-align="center center">
+                            <md-button class="md-icon-button" ng-click="deleteTable(table, $event)" aria-label="Delete">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                            </md-button>
+                        </md-card-actions>
+                    </md-card>
+                    <div flex="10" layout="row" layout-align="center center">
+                        <div flex>
+                            <md-button ng-click="addTable(seatingArea, $event)" class="md-fab md-mini md-primary" aria-label="Add">
+                                <md-tooltip md-direction="top">
+                                    Add table to {{seatingArea.name}}
+                                </md-tooltip>
+                                <i class="fa fa-plus fa-lg" aria-hidden="true"></i>
+                            </md-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <md-button ng-click="addSeatingArea($event)" class="md-accent md-raised">
+                    Add new Seating Area
+                </md-button>
+            </div>
+        </div>        
+    </md-content>
+</div>

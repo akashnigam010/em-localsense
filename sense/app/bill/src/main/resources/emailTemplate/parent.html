@@ -1,0 +1,58 @@
+<div style="background: #ffffff; font-family: arial, sans-serif;">
+	<table class="main" style="position: relative" border="0"
+		align="center" cellpadding="0" cellspacing="0">
+		<tbody>
+			<tr>
+				<td>
+					<div style="border: 1px solid #eaeaea; width: 452px; float: left;">
+						<div
+							style="width: 100%; margin: auto; padding: 27px 0 30px 0; overflow: hidden;">
+							<img src="${image-server}/excuseme-logo.png" width="129"
+								height="44" style="float: left; margin: 3px 0 0 150px"
+								alt="Excuse Me"></img>
+						</div>
+						<div
+							style="background: #f7fcfe; color: #5b5b5b; font-size: 13px; line-height: 17px; clear: both; padding: 35px; float: left; margin-bottom: 10px">
+							<div>
+								<table cellpadding="0" cellspacing="0" border="0">
+									<tbody>
+										<tr>
+											<td style="width: 48px;"><img
+												src="${image-server}/bill.png" style="float: left;"></img></td>
+											<td>
+												<div
+													style="float: left; margin: 2px 0 0 26px; font-size: 22px; font-weight: 100; line-height: 29px">
+													Your bill at <span style="font-weight: 400;">
+														${restaurantName} </span>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+
+							${itemList}
+
+						</div>
+						<div style="background: #042E6F; height: 33px; clear: both;">
+							<p
+								style="font-size: 20px; padding: 5px 0 20px 0; margin: 0; clear: both; width: 100%; float: left; color: #FFF;">
+								<span style="float: left; width: 45%; text-align: right;">Grand
+									Total</span> <span
+									style="float: left; width: 10%; text-align: center;">:</span> <span
+									style="float: right; width: 45%; text-align: left;"
+									class="valueInfo">${grandTotal}</span>
+							</p>
+						</div>
+						<div style="background: #0E2 855; height: 10px;"></div>
+					</div>
+				</td>
+			</tr>
+			
+            ${promotion}
+
+		</tbody>
+	</table>
+</div>
+
+${footer}

@@ -1,0 +1,53 @@
+<div class="col-md-12" ng-init="searchReportData(startDate, endDate)">
+    <md-content layout="column" layout-padding>
+    	<form name="reportForm">
+            <div class="panel" flex>
+                <md-toolbar class="md-primary md-hue-2 cursorPointer" role="tab" id="panel-label">
+                    <div class="md-toolbar-tools">
+                        <h4 class="panel-title" style="width:100%;">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion-orders" data-target="#report-search-panel" aria-expanded="true" aria-controls="report-search-panel">
+                                    <div layout="row">
+                                        <span flex>Get Report by Date</span>
+                                        <span><i class="fa fa-chevron-down rotate-icon" aria-hidden="true"></i></span>
+                                    </div>                                          
+                                </a>
+                            </h4>
+                    </div>
+                </md-toolbar>
+                <div id="report-search-panel" class="panel-collapse collapse" role="tabpanel" aria-labelledby="panel-label">
+                    <div class="panel-body" layout-wrap>
+                        <div flex layout="column" layout-gt-sm="row" layout-padding>
+                            <div flex flex-gt-sm="100" class="md-block" layout="column" layout-gt-sm="row">
+                                <md-datepicker class="datepicker" required name="startDate" ng-model="startDate" md-placeholder="Enter Start date" md-open-on-focus></md-datepicker>
+                                <div flex ng-messages="reportForm.startDate.$error" style="color: red;">
+                                    <div ng-message="valid">Invalid Date</div>
+                                    <div ng-message="required">Start date is required</div>
+                                </div>
+                                <md-datepicker class="datepicker" required name="endDate" ng-model="endDate" md-placeholder="Enter End date" md-open-on-focus></md-datepicker>
+                                <div flex ng-messages="reportForm.endDate.$error" style="color: red;">
+                                    <div ng-message="valid">Invalid Date</div>
+                                    <div ng-message="required">End date is required</div>
+                                </div>
+                            </div>                            
+                        </div>
+                        <div flex layout="row" layout-align-gt-sm="start center" layout-align="center center">
+                            <md-input-container flex-xs="80" flex-sm="50" flex-md="30" flex-lg="20">
+                                <md-button ng-click="getReportData($event)" class="md-primary md-raised md-large" aria-label="get report" style="width:100%; height: 50px;">
+                                    Get Report
+                                </md-button>
+                            </md-input-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+	    <md-card>
+	    	<canvas layout-padding id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options" 
+			chart-dataset-override="datasetOverride" chart-click="onClick">
+			</canvas>
+	    </md-card>         
+    </md-content>
+</div>
+
+
+
