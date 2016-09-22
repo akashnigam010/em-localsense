@@ -1,0 +1,93 @@
+<style>
+    .not-first-child {
+        margin-top: 0px !important;
+    }
+</style>
+<md-dialog aria-label="Add Fnb Item" ng-cloak style="width: 80%;">
+  <form name="addFnbItemForm" novalidate autocomplete="off">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>{{addEditItemModalObj.heading}}</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon aria-label="Close dialog">
+            <i class="fa fa-times"></i>
+          </md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <div layout="row">
+            <div flex layout="column" layout-wrap layout-align="center stretch">
+                <md-input-container flex class="md-block">
+                  <label>Name</label>
+                  <md-icon><ng-md-icon icon="mode_edit"></ng-md-icon></md-icon>
+                  <input required name="name" ng-model="addEditItemModalObj.name">
+                  <div ng-messages="addFnbItemForm.name.$error">
+                    <div ng-message="required">This is required</div>
+                  </div>                   
+                </md-input-container>
+                <md-input-container flex class="md-block">
+                  <md-checkbox ng-model="addEditItemModalObj.available" aria-label="Available">
+                    {{ addEditItemModalObj.available == true?'Available':'Unavailable' }}
+                  </md-checkbox>
+                </md-input-container>
+                <md-input-container flex class="md-block">
+                  <label>Price</label>
+                  <md-icon><i class="fa fa-pencil-square-o" aria-hidden="true"></i></md-icon>
+                  <input required name="price" type="number" ng-model="addEditItemModalObj.price">
+                  <div ng-messages="addFnbItemForm.price.$error">
+                    <div ng-message="required">This is required</div>
+                  </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                  <md-icon><ng-md-icon icon="group"></ng-md-icon></md-icon>
+                  <md-radio-group required name="fnbItemType" layout-gt-sm="row" ng-model="addEditItemModalObj.fnbItemType">
+                      <md-radio-button flex value="VEG">Veg</md-radio-button>
+                      <md-radio-button flex value="NONVEG" class="not-first-child">Non Veg</md-radio-button>
+                      <md-radio-button flex value="BEVERAGE" class="not-first-child">Beverage</md-radio-button>
+                  </md-radio-group>
+                  <div ng-messages="addFnbItemForm.fnbItemType.$error">
+                    <div ng-message="required">This is required</div>
+                  </div>
+                </md-input-container>                
+                <md-input-container flex class="md-block">
+                  <p>Spicy Level</p>
+                  <md-radio-group layout="row" ng-model="addEditItemModalObj.spicyLevel">
+                    <md-radio-button flex value="1" class="md-primary">Low</md-radio-button>
+                    <md-radio-button flex value="2" class="md-primary">Med</md-radio-button>
+                    <md-radio-button flex value="3" class="md-primary">High</md-radio-button>
+                  </md-radio-group>                               
+                </md-input-container>
+                <md-input-container flex class="md-block">
+                  <p>Serves For (people)</p>
+                  <md-radio-group layout="row" ng-model="addEditItemModalObj.servesFor">
+                    <md-radio-button flex value="1" class="md-primary">1</md-radio-button>
+                    <md-radio-button flex value="2" class="md-primary">2</md-radio-button>
+                    <md-radio-button flex value="3" class="md-primary">3</md-radio-button>
+                  </md-radio-group>                               
+                </md-input-container>
+                <md-input-container flex class="md-block">
+                  <p>Preparation Time (minutes)</p>
+                  <md-radio-group layout="row" ng-model="addEditItemModalObj.preparationTime">
+                    <md-radio-button flex value="5" class="md-primary">5</md-radio-button>
+                    <md-radio-button flex value="10" class="md-primary">10</md-radio-button>
+                    <md-radio-button flex value="15" class="md-primary">15</md-radio-button>
+                  </md-radio-group>                               
+                </md-input-container>
+                <md-input-container class="md-block">
+                  <label>Description</label>
+                  <md-icon><ng-md-icon icon="mode_edit"></ng-md-icon></md-icon>
+                  <textarea name="description" ng-model="addEditItemModalObj.description" md-maxlength="500"></textarea>
+                </md-input-container>
+            </div>
+        </div>
+      </div>           
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-align="center center">
+      <md-button type="submit" ng-click="addFnbItemForm.$valid && answer(true)">Save</md-button>
+      <md-button ng-click="answer(false)">Cancel</md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

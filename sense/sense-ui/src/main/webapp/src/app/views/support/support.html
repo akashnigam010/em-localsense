@@ -1,0 +1,58 @@
+<div ng-init="getSupportDetails()">
+    <md-content layout="column" layout-padding>
+        <div layout="column" class="custom-card" md-whiteframe="6" layout-padding>
+            <div flex layout="column" layout-gt-sm="row" layout-wrap layout-align="space-around center">
+                <md-input-container flex class="md-block">
+                    <md-icon>
+                        <ng-md-icon icon="phone"></ng-md-icon>
+                    </md-icon>
+                    <p>{{contactNumber}}</p>
+                </md-input-container>
+                <md-input-container flex class="md-block">
+                    <md-icon>
+                        <ng-md-icon icon="email"></ng-md-icon>
+                    </md-icon>
+                    <p>{{emailAddress}}</p>
+                </md-input-container>
+                <md-input-container flex class="md-block">
+                    <md-button class="md-accent md-raised" ng-click="sendMessage($event)">Direct Message</md-button>
+                </md-input-container>
+            </div>
+        </div>
+        <md-divider></md-divider>
+        <md-subheader>Messages</md-subheader>
+        <md-card flex layout="row" md-whiteframe="1" style="max-height:60px;" ng-repeat="message in messages | orderBy : '-convertedDate'">
+            <md-card-content flex layout="row" layout-align="center center" ng-click="viewMessage(message, $event)" class="cursorPointer" layout-padding>
+                <md-button class="md-icon-button" aria-label="in or out" ng-if="message.to != 'Restaurant'">
+                    <ng-md-icon icon="send"></ng-md-icon>
+                    <md-tooltip md-direction="top">Sent</md-tooltip>
+                </md-button>
+                <md-button class="md-icon-button" aria-label="in or out" ng-if="message.to == 'Restaurant'">
+                    <ng-md-icon icon="call_received"></ng-md-icon>
+                    <md-tooltip md-direction="top">Received</md-tooltip>
+                </md-button>
+                <div flex="40" class="hide-mobile">
+                    <p ng-if="message.to != 'Restaurant'">Sent</p>
+                    <p ng-if="message.to == 'Restaurant'">Received</p>
+                </div>
+                <div flex>
+                    <p>{{message.date}}</p>
+                </div>
+                <span class="notification" ng-if="message.isNew == true">
+                    <i class="fa fa-flag fa-lg"></i>
+                    <md-tooltip md-direction="top">New Message</md-tooltip>
+                </span>
+            </md-card-content>
+            <div layout="row">
+                <md-button class="md-icon-button" ng-click="deleteMessage(message, $event)" aria-label="Delete Message">
+                    <md-icon>
+                        <ng-md-icon icon="delete"></ng-md-icon>
+                    </md-icon>
+                </md-button>
+            </div>
+        </md-card>
+        <div layout-padding ng-if="messages.length == 0">
+            <p class="sense-bold">No messages found. Click on button above to send a message.</p>
+        </div>
+    </md-content>
+</div>

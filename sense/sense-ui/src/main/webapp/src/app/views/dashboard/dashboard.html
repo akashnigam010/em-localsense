@@ -1,0 +1,29 @@
+<div ng-init="loadTables()">
+    <md-content>
+        <div layout="column" layout-padding>
+            <div flex layout="column" ng-repeat="seatingArea in seatingAreas">
+                <h4 flex="80" class="panel-title full-width">
+                  {{seatingArea.name | uppercase}}                                                          
+                </h4>
+                <div flex layout="row" layout-wrap layout-fill style="padding-top: 5px;">
+                    <md-card layout="column" class="table cursorPointer" md-whiteframe="4" flex="10" ng-repeat="table in seatingArea.tables" ng-click="redirect('/menu', table, $event)">
+                        <md-card-title flex="70">
+                            <md-card-title-text>
+                                <span align="center" class="md-subhead">{{table.tableNumber}}</span>
+                            </md-card-title-text>
+                        </md-card-title>
+                        <md-card-actions flex="30" layout="row" layout-align="center center">
+                            <md-button class="md-warn md-raised full-width" ng-if="table.status != 'VACANT'" aria-label="menu">
+                                <i class="fa fa-ellipsis-h fa-2x" aria-hidden="true" style="vertical-align: middle;"></i>
+                            </md-button>
+                        </md-card-actions>
+                    </md-card>
+
+                </div>
+            </div>
+        </div>
+        <div layout-padding ng-if="seatingAreas.length == 0">
+            <p class="sense-bold">No Tables found. Please go to Manage->Tables to add new tables</p>
+        </div>      
+    </md-content>
+</div>
