@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
 import cwf.date.CwfClock;
-import cwf.dbhelper.SenseContext;
+import cwf.dbhelper.sequencegenerator.SequenceDao;
 import cwf.helper.exception.BusinessException;
 import cwf.helper.type.GenericErrorCodeType;
 import in.cw.sense.api.bo.bill.entity.OrderEntity;
@@ -34,10 +34,11 @@ import in.cw.sense.app.menu.MenuDao;
 import in.cw.sense.app.tabledetails.mapper.TableDetailsMapper;
 import in.cw.sense.app.tabledetails.type.TableDetailsErrorCodeType;
 
+
 @Repository
 public class TablesDetailsDao {
 	private static final Logger LOG = Logger.getLogger(TablesDetailsDao.class);
-	@Autowired SenseContext context;
+	@Autowired SequenceDao sequenceDao;
 	@Autowired TableDetailsMapper mapper;
 	@Autowired MenuDao menuDao;
 	@Autowired CwfClock clock;
@@ -48,8 +49,7 @@ public class TablesDetailsDao {
 	private static final String ORDER_SEQ = "order_seq";
 	private static final String ID = "_id";
 	private static final String STATUS = "status";
-	private static final String KOT_SEQ = "kot_seq";
-
+	
 	public void setSenseMongoTemplate(MongoTemplate senseMongoTemplate) {
 		this.senseMongoTemplate = senseMongoTemplate;
 	}
@@ -85,7 +85,7 @@ public class TablesDetailsDao {
 			Query findQuery = Query.query(Criteria.where("id").is(request.getId()));
 			TableSeatingArea seatingArea = senseMongoTemplate.findOne(findQuery, TableSeatingArea.class);
 			if (seatingArea == null) {
-				int seqId = (int) context.getNextSequenceId(SEATING_AREA_SEQ);
+				int seqId = sequenceDao.getNextSequenceId(SEATING_AREA_SEQ);
 				TableSeatingArea newSeatingArea = new TableSeatingArea(seqId, request.getName());
 				senseMongoTemplate.save(newSeatingArea);
 			} else {
@@ -119,7 +119,7 @@ public class TablesDetailsDao {
 				TableSeatingArea seatingArea = 
 						senseMongoTemplate.findById(request.getSeatingAreaId(), TableSeatingArea.class);
 				if (seatingArea != null) {
-					int seqId = (int) context.getNextSequenceId(TABLE_DETAILS_SEQ);
+					int seqId = sequenceDao.getNextSequenceId(TABLE_DETAILS_SEQ);
 					Table newTable = new Table(seqId, seatingArea, request.getTableNumber(), request.getCoverCapacity(),
 							TableStatusType.VACANT);
 					senseMongoTemplate.save(newTable);
@@ -227,7 +227,7 @@ public class TablesDetailsDao {
 	}
 
 	private OrderEntity addANewOrder(AddOrderRequest request) {
-		int seqId = (int) context.getNextSequenceId(ORDER_SEQ);
+		int seqId = sequenceDao.getNextSequenceId(ORDER_SEQ);
 		OrderEntity order = new OrderEntity();
 		List<OrderUnit> orderUnits = mapOrderItemsToOrderUnitEntity(request.getItems());
 		order.setOrderUnits(orderUnits);

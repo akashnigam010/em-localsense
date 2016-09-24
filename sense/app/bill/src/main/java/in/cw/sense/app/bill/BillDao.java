@@ -10,21 +10,26 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
-import cwf.dbhelper.SenseContext;
+import cwf.dbhelper.sequencegenerator.SequenceDao;
 import cwf.helper.exception.BusinessException;
 import cwf.helper.type.GenericErrorCodeType;
 import in.cw.sense.api.bo.bill.dto.BillDto;
 import in.cw.sense.api.bo.bill.entity.BillEntity;
 import in.cw.sense.api.bo.bill.entity.OrderUnit;
 import in.cw.sense.api.bo.bill.type.BillStatusType;
-import in.cw.sense.api.bo.kot.entity.Kot;
 import in.cw.sense.api.bo.bill.type.CloudSyncStatusType;
+import in.cw.sense.api.bo.kot.entity.Kot;
 import in.cw.sense.app.bill.mapper.BillMapper;
 import in.cw.sense.app.bill.type.BillDetailsErrorCodeType;
 import in.cw.sense.app.tabledetails.TablesDetailsDao;
 
 @Repository
 public class BillDao {
+	@Autowired SequenceDao sequenceDao;
+	@Autowired BillMapper mapper;
+	@Autowired TablesDetailsDao tablesDao;
+	@Autowired MongoTemplate senseMongoTemplate;
+	
 	private static final Logger LOG = Logger.getLogger(BillDao.class);
 	private static final String ID = "_id";
 	private static final String TABLE_ID = "tableId";
@@ -32,11 +37,6 @@ public class BillDao {
 	private static final String BILL_STATUS = "status";
 	private static final String SYNC_STATUS = "syncStatus";
 	
-	@Autowired SenseContext context;
-	@Autowired BillMapper mapper;
-	@Autowired TablesDetailsDao tablesDao;
-	@Autowired MongoTemplate senseMongoTemplate;
-
 	public void setSenseMongoTemplate(MongoTemplate senseMongoTemplate) {
 		this.senseMongoTemplate = senseMongoTemplate;
 	}
@@ -66,7 +66,7 @@ public class BillDao {
 	
 	public BillEntity addOrderItemsToBill(List<OrderUnit> orders, Integer tableId) 
 			throws BusinessException {
-		int billId = (int) context.getNextSequenceId(BILL_SEQ);
+		int billId = sequenceDao.getNextSequenceId(BILL_SEQ);
 		BillEntity bill = new BillEntity();
 		bill.setId(billId);
 		bill.setOrders(orders);
@@ -114,17 +114,14 @@ public class BillDao {
 	 * TODO: convert to BillDto - Himant
 	 */
 	public List<BillEntity> getAllNonSynchedBills() throws BusinessException {
-		MongoTemplate template = context.getSenseDbInstance();
 		try {
 			Query findQuery = Query.query(Criteria.where(SYNC_STATUS).is(CloudSyncStatusType.NOT_IN_SYNC.getSyncStatus()))
 						.addCriteria(Criteria.where(BILL_STATUS).is(BillStatusType.SETTLED.getStatus()));
-			List<BillEntity> bills = template.find(findQuery, BillEntity.class);
+			List<BillEntity> bills = senseMongoTemplate.find(findQuery, BillEntity.class);
 			return bills;
 		} catch (Exception e) {
 			LOG.error("Exception occured while fetching all bill details", e);
 			throw new BusinessException(GenericErrorCodeType.GENERIC_ERROR, e.getMessage());
-		} finally {
-			template.getDb().getMongo().close();
 		}
 	}
 }

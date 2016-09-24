@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
-import cwf.dbhelper.SenseContext;
+import cwf.dbhelper.sequencegenerator.SequenceDao;
 import cwf.helper.exception.BusinessException;
 import cwf.helper.type.GenericErrorCodeType;
 import in.cw.sense.api.bo.bill.entity.BillEntity;
@@ -22,7 +22,7 @@ import in.cw.sense.app.taxdetails.type.TaxType;
 
 @Repository
 public class TaxDetailsDao {
-	@Autowired SenseContext context;
+	@Autowired SequenceDao sequenceDao;
 	@Autowired TaxDetailsMapper mapper;
 	@Autowired MongoTemplate senseMongoTemplate;
 
@@ -59,9 +59,8 @@ public class TaxDetailsDao {
 		TaxDetailsEntity taxDetails = null;
 		try {
 			if (request.getId() == null) {
-				int seqId = (int) context.getNextSequenceId(TAX_DETAILS_SEQ);
 				taxDetails = new TaxDetailsEntity();
-				taxDetails.setId(seqId);
+				taxDetails.setId(sequenceDao.getNextSequenceId(TAX_DETAILS_SEQ));
 			} else {
 				taxDetails = senseMongoTemplate.findById(request.getId(), TaxDetailsEntity.class);
 				if (taxDetails == null) {

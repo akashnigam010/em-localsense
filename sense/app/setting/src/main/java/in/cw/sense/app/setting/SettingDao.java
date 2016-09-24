@@ -6,11 +6,9 @@ import java.util.List;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
-import cwf.dbhelper.SenseContext;
 import cwf.helper.exception.BusinessException;
 import in.cw.sense.api.bo.setting.dto.CloudConnectDto;
 import in.cw.sense.api.bo.setting.entity.CloudConnect;
@@ -20,7 +18,7 @@ import in.cw.sense.app.setting.type.SettingErrorCodeType;
 @Repository
 public class SettingDao {
 	private static final Logger LOG = Logger.getLogger(SettingDao.class);
-	@Autowired SenseContext context;
+
 	@Autowired SettingMapper mapper;
 	@Autowired MongoTemplate senseMongoTemplate;
 
