@@ -8,7 +8,6 @@ import java.util.List;
 import in.cw.sense.api.bo.bill.type.BillStatusType;
 import in.cw.sense.api.bo.bill.type.CloudSyncStatusType;
 import in.cw.sense.api.bo.bill.type.PaymentModeType;
-import in.cw.sense.api.bo.table.dto.Charge;
 import in.cw.sense.api.bo.table.dto.Item;
 
 public class BillDto implements Serializable {
@@ -23,9 +22,9 @@ public class BillDto implements Serializable {
 	private ItemCountDto itemCount;
 	private DiscountDto discount;
 	private TotalDto subTotal;
-	private List<Charge> internalCharges;
+	private List<ChargeDto> internalCharges;
 	private TotalDto subTotalExclusive;
-	private List<Charge> taxes;
+	private List<ChargeDto> taxes;
 	private TotalDto subTotalInclusive;
 	private BigDecimal grandTotal;
 	private PaymentModeType paymentMode;
@@ -73,19 +72,19 @@ public class BillDto implements Serializable {
 		this.orders = orders;
 	}
 
-	public List<Charge> getInternalCharges() {
+	public List<ChargeDto> getInternalCharges() {
 		return internalCharges;
 	}
 
-	public void setInternalCharges(List<Charge> internalCharges) {
+	public void setInternalCharges(List<ChargeDto> internalCharges) {
 		this.internalCharges = internalCharges;
 	}
 
-	public List<Charge> getTaxes() {
+	public List<ChargeDto> getTaxes() {
 		return taxes;
 	}
 
-	public void setTaxes(List<Charge> taxes) {
+	public void setTaxes(List<ChargeDto> taxes) {
 		this.taxes = taxes;
 	}
 

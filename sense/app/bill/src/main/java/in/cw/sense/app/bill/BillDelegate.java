@@ -1,5 +1,8 @@
 package in.cw.sense.app.bill;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -193,7 +196,27 @@ public class BillDelegate {
 		mapper.mapBillEntityToDto(bill, billDto);
 		RawBill rawBill = new RawBill(restaurantInfo.getRestaurantInfo(), billDto);
 		String emailBody = emailCreator.getBillEmailBody(rawBill);
-		System.out.println(emailBody);
+		BufferedWriter writer = null;
+		try
+		{
+		    writer = new BufferedWriter( new FileWriter( "/Users/aknigam/Documents/Work/htmlEmail.txt"));
+		    writer.write( emailBody);
+
+		}
+		catch ( IOException e)
+		{
+		}
+		finally
+		{
+		    try
+		    {
+		        if ( writer != null)
+		        writer.close( );
+		    }
+		    catch ( IOException e)
+		    {
+		    }
+		}
 	}
 	
 	public void printBill(BillIdRequest request) throws BusinessException {
