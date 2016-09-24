@@ -3,14 +3,14 @@ package in.cw.sense.api.bo.table.response;
 import java.util.List;
 
 import in.cw.sense.api.bo.response.GenericResponse;
-import in.cw.sense.api.bo.table.dto.Order;
+import in.cw.sense.api.bo.table.dto.OrderDto;
 
 @SuppressWarnings("rawtypes")
 public class OrderSummaryResponse extends GenericResponse {
 	private static final long serialVersionUID = 1L;
 	private Integer tableId;
 	private String tableNumber;
-	private List<Order> orderDetails;
+	private List<OrderDto> orderDetails;
 
 	public Integer getTableId() {
 		return tableId;
@@ -28,11 +28,11 @@ public class OrderSummaryResponse extends GenericResponse {
 		this.tableNumber = tableNumber;
 	}
 
-	public List<Order> getOrderDetails() {
+	public List<OrderDto> getOrderDetails() {
 		return orderDetails;
 	}
 
-	public void setOrderDetails(List<Order> orderDetails) {
+	public void setOrderDetails(List<OrderDto> orderDetails) {
 		this.orderDetails = orderDetails;
 	}
 }

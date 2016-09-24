@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 import in.cw.sense.api.bo.bill.entity.OrderEntity;
 import in.cw.sense.api.bo.bill.entity.OrderUnit;
-import in.cw.sense.api.bo.table.dto.Item;
-import in.cw.sense.api.bo.table.dto.Order;
+import in.cw.sense.api.bo.table.dto.ItemDto;
+import in.cw.sense.api.bo.table.dto.OrderDto;
 import in.cw.sense.api.bo.table.dto.SeatingAreaDto;
 import in.cw.sense.api.bo.table.dto.TableDto;
 import in.cw.sense.api.bo.table.entity.Table;
@@ -73,11 +73,11 @@ public class TableDetailsMapper {
 
 	public void mapOrderEntityToResponse(List<OrderEntity> orderEntities, OrderSummaryResponse response,
 			String tableNumber) {
-		List<Order> addOrders = new ArrayList<>();
+		List<OrderDto> addOrders = new ArrayList<>();
 		for (OrderEntity order : orderEntities) {
-			Order addOrder = new Order();
+			OrderDto addOrder = new OrderDto();
 			addOrder.setId(order.getId());
-			List<Item> items = new ArrayList<>();
+			List<ItemDto> items = new ArrayList<>();
 			mapOrderEntityToItems(order, items);
 			addOrder.setItems(items);
 			addOrders.add(addOrder);
@@ -86,9 +86,9 @@ public class TableDetailsMapper {
 		response.setTableNumber(tableNumber);
 	}
 
-	private void mapOrderEntityToItems(OrderEntity order, List<Item> items) {
+	private void mapOrderEntityToItems(OrderEntity order, List<ItemDto> items) {
 		for (OrderUnit orderUnit : order.getOrderUnits()) {
-			Item item = new Item();
+			ItemDto item = new ItemDto();
 			item.setId(orderUnit.getItemId());
 			item.setName(orderUnit.getItemName());
 			item.setPrice(orderUnit.getPrice());

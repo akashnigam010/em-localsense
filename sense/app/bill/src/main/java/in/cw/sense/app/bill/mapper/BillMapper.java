@@ -22,7 +22,7 @@ import in.cw.sense.api.bo.bill.entity.OrderUnit;
 import in.cw.sense.api.bo.bill.entity.RateValueEntity;
 import in.cw.sense.api.bo.bill.entity.TotalEntity;
 import in.cw.sense.api.bo.bill.entity.TypeValueEntity;
-import in.cw.sense.api.bo.table.dto.Item;
+import in.cw.sense.api.bo.table.dto.ItemDto;
 import in.cw.sense.api.bo.table.dto.TableDto;
 
 @Component
@@ -131,10 +131,10 @@ public class BillMapper {
 	 * order.setId(entity.getId()); orders.add(order); } return orders; }
 	 */
 
-	private List<Item> mapOrderEntityItemsToDto(List<OrderUnit> orderUnits) {
-		List<Item> items = new ArrayList<>();
+	private List<ItemDto> mapOrderEntityItemsToDto(List<OrderUnit> orderUnits) {
+		List<ItemDto> items = new ArrayList<>();
 		for (OrderUnit unit : orderUnits) {
-			Item item = new Item();
+			ItemDto item = new ItemDto();
 			item.setId(unit.getItemId());
 			item.setName(unit.getItemName());
 			item.setPrice(unit.getPrice());

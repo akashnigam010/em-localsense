@@ -20,7 +20,7 @@ import cwf.helper.type.GenericErrorCodeType;
 import in.cw.sense.api.bo.bill.entity.OrderEntity;
 import in.cw.sense.api.bo.bill.entity.OrderUnit;
 import in.cw.sense.api.bo.kot.entity.Kot;
-import in.cw.sense.api.bo.table.dto.Item;
+import in.cw.sense.api.bo.table.dto.ItemDto;
 import in.cw.sense.api.bo.table.dto.TableDto;
 import in.cw.sense.api.bo.table.entity.Table;
 import in.cw.sense.api.bo.table.entity.TableSeatingArea;
@@ -245,12 +245,12 @@ public class TablesDetailsDao {
 		return update;
 	}
 
-	public List<OrderUnit> mapOrderItemsToOrderUnitEntity(List<Item> orderItems) {
+	public List<OrderUnit> mapOrderItemsToOrderUnitEntity(List<ItemDto> orderItems) {
 		List<OrderUnit> orderUnits = new ArrayList<>();
 		// Here itemsFromCache has Item entity from Menu
 		List<in.cw.sense.api.bo.menu.entity.Item> itemsFromCache = menuDao.getAllMenuItems();
 		// Here tableOrderRequestItem is Item Dto from Table - addOrder request
-		for (Item tableOrderRequestItem : orderItems) {
+		for (ItemDto tableOrderRequestItem : orderItems) {
 			for (in.cw.sense.api.bo.menu.entity.Item itemFromCache : itemsFromCache) {
 				if (tableOrderRequestItem.getId() == itemFromCache.getId()) {
 					OrderUnit orderUnit = new OrderUnit();

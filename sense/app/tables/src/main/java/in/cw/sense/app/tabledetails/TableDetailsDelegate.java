@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import cwf.helper.exception.BusinessException;
 import in.cw.sense.api.bo.bill.entity.OrderEntity;
 import in.cw.sense.api.bo.bill.entity.OrderUnit;
-import in.cw.sense.api.bo.table.dto.Item;
+import in.cw.sense.api.bo.table.dto.ItemDto;
 import in.cw.sense.api.bo.table.dto.TableDto;
 import in.cw.sense.api.bo.table.entity.Table;
 import in.cw.sense.api.bo.table.entity.TableSeatingArea;
@@ -123,7 +123,7 @@ public class TableDetailsDelegate {
 		dao.cancelTable(request);
 	}
 	
-	public List<OrderUnit> mapOrderItemsToOrderUnitEntity(List<Item> orderItems) {
+	public List<OrderUnit> mapOrderItemsToOrderUnitEntity(List<ItemDto> orderItems) {
 		return dao.mapOrderItemsToOrderUnitEntity(orderItems);
 	}
 	

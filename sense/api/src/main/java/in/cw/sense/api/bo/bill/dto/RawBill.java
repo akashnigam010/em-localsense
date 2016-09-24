@@ -6,7 +6,7 @@ import java.util.List;
 
 import in.cw.sense.api.bo.menu.type.MenuType;
 import in.cw.sense.api.bo.restaurant.dto.RestaurantInfoDto;
-import in.cw.sense.api.bo.table.dto.Item;
+import in.cw.sense.api.bo.table.dto.ItemDto;
 
 public class RawBill {
 	private RestaurantInfoDto restaurantInfo;
@@ -34,9 +34,9 @@ public class RawBill {
 		this.bill = bill;
 	}
 
-	public List<Item> getFnbItems() {
-		List<Item> fnbItems = new ArrayList<>();
-		for (Item item : this.bill.getOrders()) {
+	public List<ItemDto> getFnbItems() {
+		List<ItemDto> fnbItems = new ArrayList<>();
+		for (ItemDto item : this.bill.getOrders()) {
 			if (item.getType() == MenuType.FNB) {
 				fnbItems.add(item);
 			}
@@ -44,9 +44,9 @@ public class RawBill {
 		return fnbItems;
 	}
 
-	public List<Item> getBarItems() {
-		List<Item> barItems = new ArrayList<>();
-		for (Item item : this.bill.getOrders()) {
+	public List<ItemDto> getBarItems() {
+		List<ItemDto> barItems = new ArrayList<>();
+		for (ItemDto item : this.bill.getOrders()) {
 			if (item.getType() == MenuType.BAR) {
 				barItems.add(item);
 			}

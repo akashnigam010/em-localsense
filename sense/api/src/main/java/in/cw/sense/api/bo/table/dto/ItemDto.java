@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import in.cw.sense.api.bo.menu.type.MenuType;
 
-public class Item {
+public class ItemDto {
 	private Integer id;
 	private String name;
 	private Integer quantity;

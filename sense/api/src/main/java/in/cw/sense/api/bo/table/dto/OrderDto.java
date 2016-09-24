@@ -2,9 +2,9 @@ package in.cw.sense.api.bo.table.dto;
 
 import java.util.List;
 
-public class Order {
+public class OrderDto {
 	private Integer id;
-	private List<Item> items;
+	private List<ItemDto> items;
 
 	public Integer getId() {
 		return id;
@@ -12,10 +12,10 @@ public class Order {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public List<Item> getItems() {
+	public List<ItemDto> getItems() {
 		return items;
 	}
-	public void setItems(List<Item> items) {
+	public void setItems(List<ItemDto> items) {
 		this.items = items;
 	}
 }

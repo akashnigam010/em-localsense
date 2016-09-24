@@ -8,7 +8,7 @@ import java.util.List;
 import in.cw.sense.api.bo.bill.type.BillStatusType;
 import in.cw.sense.api.bo.bill.type.CloudSyncStatusType;
 import in.cw.sense.api.bo.bill.type.PaymentModeType;
-import in.cw.sense.api.bo.table.dto.Item;
+import in.cw.sense.api.bo.table.dto.ItemDto;
 
 public class BillDto implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -18,7 +18,7 @@ public class BillDto implements Serializable {
 	private String personName;
 	private BillStatusType status;
 	private String reasonForCancel;
-	private List<Item> orders;
+	private List<ItemDto> orders;
 	private ItemCountDto itemCount;
 	private DiscountDto discount;
 	private TotalDto subTotal;
@@ -64,11 +64,11 @@ public class BillDto implements Serializable {
 		this.status = status;
 	}
 
-	public List<Item> getOrders() {
+	public List<ItemDto> getOrders() {
 		return orders;
 	}
 
-	public void setOrders(List<Item> orders) {
+	public void setOrders(List<ItemDto> orders) {
 		this.orders = orders;
 	}
 

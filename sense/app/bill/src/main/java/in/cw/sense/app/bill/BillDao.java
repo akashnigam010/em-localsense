@@ -111,6 +111,7 @@ public class BillDao {
 	 * 
 	 * @return	Collection of bill dto object, which is not synced to cloud database.
 	 * @throws BusinessException in case of any exception.
+	 * TODO: convert to BillDto - Himant
 	 */
 	public List<BillEntity> getAllNonSynchedBills() throws BusinessException {
 		MongoTemplate template = context.getSenseDbInstance();

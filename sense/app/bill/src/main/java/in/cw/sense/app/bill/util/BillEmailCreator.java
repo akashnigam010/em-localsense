@@ -16,7 +16,7 @@ import in.cw.sense.api.bo.bill.dto.TypeValueDto;
 import in.cw.sense.api.bo.emailTemplate.dto.EmailTemplateDto;
 import in.cw.sense.api.bo.emailTemplate.type.EmailTemplateType;
 import in.cw.sense.api.bo.menu.type.MenuType;
-import in.cw.sense.api.bo.table.dto.Item;
+import in.cw.sense.api.bo.table.dto.ItemDto;
 import in.cw.sense.app.bill.EmailTemplateDao;
 
 @Service
@@ -77,7 +77,7 @@ public class BillEmailCreator {
 
 	private String getCategoryBodyString(MenuType type, RawBill bill) {
 		String heading = type == MenuType.FNB ? FNB : BAR;
-		List<Item> items = type == MenuType.FNB ? bill.getFnbItems() : bill.getBarItems();
+		List<ItemDto> items = type == MenuType.FNB ? bill.getFnbItems() : bill.getBarItems();
 		String categoryString = emailTemplateMap.get(EmailTemplateType.CATEGORY).getValue();
 		categoryString = replaceParams(categoryString, HEADING, heading);
 		categoryString = replaceParams(categoryString, ITEMS, getItemsListString(items));
@@ -90,9 +90,9 @@ public class BillEmailCreator {
 		return categoryString;
 	}
 
-	private String getItemsListString(List<Item> items) {
+	private String getItemsListString(List<ItemDto> items) {
 		String itemListHtml = "";
-		for (Item item : items) {
+		for (ItemDto item : items) {
 			String itemHtml = emailTemplateMap.get(EmailTemplateType.ITEM).getValue();
 			itemHtml = replaceParams(itemHtml, NAME, item.getName());
 			itemHtml = replaceParams(itemHtml, QUANTITY, item.getQuantity().toString());
