@@ -1,7 +1,5 @@
 package in.cw.sense.api.bo.restaurant.dto;
 
-import in.cw.sense.api.bo.restaurant.type.BarInfoType;
-
 public class RestaurantInfoDto {
 	private String name;
 	private String tagline;

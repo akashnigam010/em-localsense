@@ -26,6 +26,9 @@ public class BillEntity {
 
 	@Field("personName")
 	private String personName;
+	
+	@Field("covers")
+	private Integer covers;
 
 	@Field("status")
 	private BillStatusType status = BillStatusType.UNSETTLED;
@@ -254,5 +257,13 @@ public class BillEntity {
 
 	public void setReasonForCancel(String reasonForCancel) {
 		this.reasonForCancel = reasonForCancel;
+	}
+
+	public Integer getCovers() {
+		return covers;
+	}
+
+	public void setCovers(Integer covers) {
+		this.covers = covers;
 	}
 }

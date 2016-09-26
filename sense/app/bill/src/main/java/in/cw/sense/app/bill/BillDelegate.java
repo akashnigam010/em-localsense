@@ -46,6 +46,7 @@ import in.cw.sense.api.bo.tax.entity.TaxDetailsEntity;
 import in.cw.sense.app.bill.mapper.BillMapper;
 import in.cw.sense.app.bill.type.BillDetailsErrorCodeType;
 import in.cw.sense.app.bill.util.BillEmailCreator;
+import in.cw.sense.app.bill.util.BillPdfGenerator;
 import in.cw.sense.app.bill.util.InternalChargesAndTaxCalculationEngine;
 import in.cw.sense.app.restaurantinfo.RestaurantInfoDelegate;
 import in.cw.sense.app.tabledetails.TableDetailsDelegate;
@@ -63,6 +64,7 @@ public class BillDelegate {
 	@Autowired CwfClock clock;
 	@Autowired RestaurantInfoDelegate restaurantInfoDelegate;
 	@Autowired BillEmailCreator emailCreator;
+	@Autowired BillPdfGenerator pdfGenerator;
 
 	public List<BillDto> goToBill(Integer tableId) throws BusinessException {
 		List<BillDto> bills = new ArrayList<>();
@@ -190,33 +192,12 @@ public class BillDelegate {
 	}
 
 	public void emailBill(BillIdRequest request) throws BusinessException {
-		RestaurantInfoResponse restaurantInfo = restaurantInfoDelegate.getRestaurantInformation();
-		BillEntity bill = dao.getBill(request.getBillId());
-		BillDto billDto = new BillDto();
-		mapper.mapBillEntityToDto(bill, billDto);
-		RawBill rawBill = new RawBill(restaurantInfo.getRestaurantInfo(), billDto);
-		String emailBody = emailCreator.getBillEmailBody(rawBill);
-		BufferedWriter writer = null;
-		try
-		{
-		    writer = new BufferedWriter( new FileWriter( "/Users/aknigam/Documents/Work/htmlEmail.txt"));
-		    writer.write( emailBody);
-
-		}
-		catch ( IOException e)
-		{
-		}
-		finally
-		{
-		    try
-		    {
-		        if ( writer != null)
-		        writer.close( );
-		    }
-		    catch ( IOException e)
-		    {
-		    }
-		}
+//		RestaurantInfoResponse restaurantInfo = restaurantInfoDelegate.getRestaurantInformation();
+//		BillEntity bill = dao.getBill(request.getBillId());
+//		BillDto billDto = new BillDto();
+//		mapper.mapBillEntityToDto(bill, billDto);
+//		RawBill rawBill = new RawBill(restaurantInfo.getRestaurantInfo(), billDto);
+		
 	}
 	
 	public void printBill(BillIdRequest request) throws BusinessException {
@@ -225,7 +206,7 @@ public class BillDelegate {
 		BillDto billDto = new BillDto();
 		mapper.mapBillEntityToDto(bill, billDto);
 		RawBill rawBill = new RawBill(restaurantInfo.getRestaurantInfo(), billDto);
-		//TODO: Print Bill Copy
+		pdfGenerator.generatePDF(rawBill);
 	}
 	
 	private BillDto addOrderItemsAndCalculateBill(List<OrderUnit> orders, Integer tableId) throws BusinessException {

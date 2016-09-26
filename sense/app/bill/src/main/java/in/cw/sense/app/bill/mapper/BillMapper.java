@@ -33,6 +33,7 @@ public class BillMapper {
 	public void mapTableOrderDetailsToBill(TableDto tableDto, BillEntity to) {
 		to.setPersonName("DEAFULT");
 		to.setTableId(tableDto.getId());
+		to.setCovers(tableDto.getCovers());
 		to.setTableNumber(tableDto.getTableNumber());
 		if (to.getCreatedDateTime() == null) {
 			to.setCreatedDateTime(clock.cal().getTime());
@@ -64,6 +65,7 @@ public class BillMapper {
 		to.setPersonName(from.getPersonName());
 		to.setSubTotal(mapBillTotalEntityToDto(from.getSubTotal()));
 		to.setTableNumber(from.getTableNumber());
+		to.setCovers(from.getCovers());
 		to.setSubTotalExclusive(mapBillTotalEntityToDto(from.getSubTotalExclusive()));
 		to.setSubTotalInclusive(mapBillTotalEntityToDto(from.getSubTotalInclusive()));
 		to.setItemCount(mapItemCount(from.getItemCount()));
