@@ -9,9 +9,9 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
-import cwf.dbhelper.SenseContext;
 import cwf.dbhelper.cache.AppCache;
 import cwf.dbhelper.cache.Cache;
+import cwf.dbhelper.sequencegenerator.SequenceDao;
 import cwf.helper.exception.BusinessException;
 import in.cw.sense.api.bo.menu.entity.Category;
 import in.cw.sense.api.bo.menu.entity.Item;
@@ -28,7 +28,7 @@ import in.cw.sense.app.menu.mapper.MenuMapper;
 public class MenuDao {
 	@Autowired MenuMapper mapper;
 	@Autowired AppCache appCache;
-	@Autowired SenseContext context;
+	@Autowired SequenceDao sequenceDao;
 	@Autowired MongoTemplate senseMongoTemplate;
 
 	public void setSenseMongoTemplate(MongoTemplate senseMongoTemplate) {
@@ -93,8 +93,7 @@ public class MenuDao {
 			item = senseMongoTemplate.findById(request.getId(), Item.class);
 		} else {
 			// create new item
-			int id = (int) context.getNextSequenceId(ITEM_SEQ);
-			request.setId(id);
+			request.setId(sequenceDao.getNextSequenceId(ITEM_SEQ));
 		}
 		item = mapper.mapRequestToItemEntity(request);
 		senseMongoTemplate.save(item);
@@ -139,7 +138,7 @@ public class MenuDao {
 			category.setName(request.getName());
 		} else {
 			// create new category
-			int id = (int) context.getNextSequenceId(CATEGORY_SEQ);
+			int id = sequenceDao.getNextSequenceId(CATEGORY_SEQ);
 			MenuType type = MenuType.getType(request.getType());
 			category = new Category(id, type, request.getName());
 		}
@@ -190,7 +189,7 @@ public class MenuDao {
 			subCategory.setName(request.getName());
 		} else {
 			// create new category
-			int id = (int) context.getNextSequenceId(SUB_CATEGORY_SEQ);
+			int id = sequenceDao.getNextSequenceId(SUB_CATEGORY_SEQ);
 			MenuType type = MenuType.getType(request.getType());
 			subCategory = new SubCategory(id, request.getCategoryId(), type, request.getName());
 		}

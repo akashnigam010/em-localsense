@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
-import cwf.dbhelper.SenseContext;
+import cwf.dbhelper.sequencegenerator.SequenceDao;
 import cwf.helper.exception.BusinessException;
 import cwf.helper.type.GenericErrorCodeType;
 import in.cw.sense.api.bo.support.dto.ContactSupportDto;
@@ -22,7 +22,7 @@ import in.cw.sense.app.support.mapper.SupportMapper;
 
 @Repository
 public class SupportDao {
-	@Autowired SenseContext context;
+	@Autowired SequenceDao sequenceDao;
 	@Autowired SupportMapper mapper;
 	@Autowired MongoTemplate senseMongoTemplate;
 	
@@ -63,8 +63,7 @@ public class SupportDao {
 	public List<MessageDto> saveMessage(SendMessageRequest request) throws BusinessException {
 		try {
 			Message message = mapper.mapMessageEntityDetails(request);
-			int messageId = (int) context.getNextSequenceId(MESSAGE_SEQ);
-			message.setId(messageId);
+			message.setId(sequenceDao.getNextSequenceId(MESSAGE_SEQ));
 			senseMongoTemplate.save(message);
 			return getMessages();
 		} catch (Exception e) {

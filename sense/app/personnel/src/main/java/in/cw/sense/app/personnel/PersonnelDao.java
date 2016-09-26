@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
-import cwf.dbhelper.SenseContext;
+import cwf.dbhelper.sequencegenerator.SequenceDao;
 import cwf.helper.exception.BusinessException;
 import cwf.helper.hash.HashUtil;
 import in.cw.sense.api.bo.personnel.dto.PersonnelDto;
@@ -22,7 +22,7 @@ import in.cw.sense.app.personnel.type.PersonnelErrorCodeType;
 @Repository
 public class PersonnelDao {
 	private static final Logger LOG = Logger.getLogger(PersonnelDao.class);
-	@Autowired SenseContext context;
+	@Autowired SequenceDao sequenceDao;
 	@Autowired PersonnelMapper mapper;
 	@Autowired MongoTemplate senseMongoTemplate;
 
@@ -37,9 +37,8 @@ public class PersonnelDao {
 	public List<PersonnelDto> addPersonnel(AddEditPersonnelRequest request) throws BusinessException {
 		try {
 			checkIfPinAlreadyExists(request);
-			int seqId = (int) context.getNextSequenceId(PERSONNEL_ID_SEQ);
 			Personnel personnel = new Personnel();
-			personnel.setId(seqId);
+			personnel.setId(sequenceDao.getNextSequenceId(PERSONNEL_ID_SEQ));
 			mapper.map(request, personnel);
 			senseMongoTemplate.save(personnel);
 			return getPersonnels();
