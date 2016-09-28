@@ -23,6 +23,11 @@
 		</dependency>
 		<dependency>
 			<groupId>cw</groupId>
+			<artifactId>sense-restaurantinfo</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>cw</groupId>
 			<artifactId>slu</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
@@ -41,6 +46,11 @@
 			<groupId>cw</groupId>
 			<artifactId>sense-setting</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
 		</dependency>
 	</dependencies>
 	<build>

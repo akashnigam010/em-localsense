@@ -113,12 +113,12 @@ public class BillDao {
 	 * @throws BusinessException in case of any exception.
 	 * TODO: convert to BillDto - Himant
 	 */
-	public List<BillEntity> getAllNonSynchedBills() throws BusinessException {
+	public List<BillDto> getAllNonSynchedBills() throws BusinessException {
 		try {
 			Query findQuery = Query.query(Criteria.where(SYNC_STATUS).is(CloudSyncStatusType.NOT_IN_SYNC.getSyncStatus()))
 						.addCriteria(Criteria.where(BILL_STATUS).is(BillStatusType.SETTLED.getStatus()));
 			List<BillEntity> bills = senseMongoTemplate.find(findQuery, BillEntity.class);
-			return bills;
+			return mapper.mapBillEntitiesToDtos(bills);
 		} catch (Exception e) {
 			LOG.error("Exception occured while fetching all bill details", e);
 			throw new BusinessException(GenericErrorCodeType.GENERIC_ERROR, e.getMessage());

@@ -13,8 +13,7 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.apache.log4j.Logger;
 
 import cwf.helper.exception.BusinessException;
 import in.cw.sense.app.type.CloudSenseConnectErrorCodeType;
@@ -31,7 +30,7 @@ import in.cw.sense.app.type.CloudSenseConnectErrorCodeType;
  */
 @ClientEndpoint
 public class LSClient {
-
+	private static final Logger LOG = Logger.getLogger(LSClient.class);
 	// TODO : Replace the hard coded uri with value defined in properties file.
 	private final String uri = "ws://localhost:8087/cloudsense/server";
 
@@ -42,8 +41,7 @@ public class LSClient {
 	private static LSClient lsClient = null;
 
 	// @Autowired
-	// TODO : remove the direct initialization of the field, instead use
-	// autowire.
+	// TODO : remove the direct initialization of the field, instead use autowire it.
 	private MessageProcessInitializer messageProcessInitializer = new MessageProcessInitializer();
 
 	private LSClient() throws DeploymentException, IOException, URISyntaxException {
@@ -58,7 +56,7 @@ public class LSClient {
 
 	@OnMessage
 	public void onMessage(String message, Session session) {
-		System.out.println("Message recieved : " + message);
+		LOG.debug("Message recieved : " + message);
 		messageProcessInitializer.process(message, session);
 	}
 
@@ -72,11 +70,11 @@ public class LSClient {
 			if (this.session != null && this.session.isOpen()) {
 				session.getBasicRemote().sendText(message);
 			} else {
-				System.out.println("Websocket session is not open.. can not send message now.... ");
+				LOG.warn("Websocket session is not open.. can not send message now.... ");
 				throw new BusinessException(CloudSenseConnectErrorCodeType.SESSION_NOT_OPEN);
 			}
-		} catch (IOException ex) {
-
+		} catch (IOException e) {
+			LOG.error("Exception occured while sending message to cloud...", e);
 		}
 	}
 
@@ -110,5 +108,4 @@ public class LSClient {
 	public boolean isSessionOpen() {
 		return (this.session != null && this.session.isOpen());
 	}
-
 }

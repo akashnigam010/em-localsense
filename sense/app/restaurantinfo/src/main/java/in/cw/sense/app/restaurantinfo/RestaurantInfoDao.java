@@ -27,7 +27,7 @@ public class RestaurantInfoDao {
 
 	public RestaurantInfoDto getRestaurantInformation() throws BusinessException {
 		List<RestaurantInfo> restaurantInfoEntities = senseMongoTemplate.findAll(RestaurantInfo.class);
-		if (restaurantInfoEntities.size() == 0) {
+		if (restaurantInfoEntities == null || restaurantInfoEntities.size() == 0) {
 			throw new BusinessException(RestaurantInfoErrorCodeType.RESTAURANT_INFO_NOT_AVAILABLE);
 		} else if (restaurantInfoEntities.size() > 1) {
 			throw new BusinessException(RestaurantInfoErrorCodeType.INVALID_DATA);

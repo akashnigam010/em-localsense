@@ -149,6 +149,7 @@ public class BillMapper {
 	private TotalDto mapBillTotalEntityToDto(TotalEntity totalEntity) {
 		TotalDto total = new TotalDto();
 		if (totalEntity != null) {
+			total.setName(totalEntity.getName());
 			total.setFnb(totalEntity.getFnb());
 			total.setLiquor(totalEntity.getLiquor());
 		}
