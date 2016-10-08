@@ -30,7 +30,7 @@ public class MessageSenderHelper {
 				LOG.debug("Checking your internet availalbility...");
 				lsClient = LSClient.getInstance();
 			} else {
-				LOG.error("Internet connection not available..... Please check internet availability");
+				LOG.warn("Internet connection not available..... Please check internet availability");
 			}
 		} catch (IOException | DeploymentException | URISyntaxException e) {
 			LOG.error("Unexpected exception occured while fetching LSClient.. ", e);
@@ -42,7 +42,7 @@ public class MessageSenderHelper {
 			if (lsClient != null && lsClient.isSessionOpen()) {
 				lsClient.sendMessage(JsonUtil.toJson(message));
 			} else {
-				LOG.error("Session is closed, cant send message now... ");
+				LOG.warn("Session is closed, cant send message now... ");
 			}
 		} catch (BusinessException e) {
 			throw e;

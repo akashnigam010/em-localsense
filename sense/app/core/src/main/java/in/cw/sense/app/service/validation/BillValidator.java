@@ -56,7 +56,7 @@ public class BillValidator {
 		if (request.getBillId() == null) {
 			throw new BusinessException(BillDetailsErrorCodeType.BILL_ID_CANNOT_BE_EMPTY);
 		}
-		if (!PaymentModeType.contains(request.getPaymentMode())) {
+		if (request.getPaymentMode() == null || !PaymentModeType.contains(request.getPaymentMode())) {
 					throw new BusinessException(BillDetailsErrorCodeType.PAYMENT_MODE_NOT_FOUND);
 		}
 		if (PaymentModeType.CANCELLED == PaymentModeType.getPaymentModeByCode(request.getPaymentMode()) &&

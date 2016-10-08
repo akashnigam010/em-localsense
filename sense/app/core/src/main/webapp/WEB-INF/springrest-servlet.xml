@@ -13,6 +13,8 @@
 	<context:annotation-config />
 	<context:component-scan base-package="in.cw.sense.app, cwf, in.cw.sense.app.*, cwf.*" />
 	<task:annotation-driven />
-	
+
 	<bean id="billSynchJob" class="in.cw.sense.app.job.BillSynchJob"></bean>
+	<bean id="localApplicationContextProvider" class="in.cw.sense.app.socket.LocalApplicationContextProvider"/>
+	<bean id ="localMessageProcessInitializer" class ="in.cw.sense.app.websocket.MessageProcessInitializer"/>
 </beans>

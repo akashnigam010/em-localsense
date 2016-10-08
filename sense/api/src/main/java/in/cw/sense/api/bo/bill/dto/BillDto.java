@@ -16,6 +16,7 @@ public class BillDto implements Serializable {
 	private Integer id;
 	private String tableNumber;
 	private String personName;
+	private Integer covers;
 	private BillStatusType status;
 	private String reasonForCancel;
 	private List<ItemDto> orders;
@@ -174,5 +175,13 @@ public class BillDto implements Serializable {
 
 	public void setReasonForCancel(String reasonForCancel) {
 		this.reasonForCancel = reasonForCancel;
+	}
+
+	public Integer getCovers() {
+		return covers;
+	}
+
+	public void setCovers(Integer covers) {
+		this.covers = covers;
 	}
 }

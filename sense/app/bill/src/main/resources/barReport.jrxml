@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
+<!-- 2016-09-24T23:26:21 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MasterReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3d30291a-9d1d-440d-96b3-f9084b4b9e9b">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<subDataset name="itemsListDataset" uuid="1a4ecf85-c302-4d71-b34a-61814d80d9f7">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="name" class="java.lang.String"/>
+		<field name="quantity" class="java.lang.Integer"/>
+		<field name="price" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="chargesDataset" uuid="4c88d9bc-479f-4502-a4c3-dd100e8da198">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="name" class="java.lang.String"/>
+		<field name="fnb" class="in.cw.sense.api.bo.bill.dto.RateValueDto"/>
+		<field name="liquor" class="in.cw.sense.api.bo.bill.dto.RateValueDto"/>
+	</subDataset>
+	<subDataset name="taxesDataset" uuid="0bee582f-f4ae-406d-bd51-c6bb9db8799f">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="name" class="java.lang.String"/>
+		<field name="fnb" class="in.cw.sense.api.bo.bill.dto.RateValueDto"/>
+		<field name="liquor" class="in.cw.sense.api.bo.bill.dto.RateValueDto"/>
+	</subDataset>
+	<parameter name="fnbChargeDataSource" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<parameter name="fnbListDataSource" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<parameter name="fnbTaxesDataSource" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<parameter name="barListDataSource" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<parameter name="barChargeDataSource" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<parameter name="barTaxesDataSource" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="restaurantInfo" class="in.cw.sense.api.bo.restaurant.dto.RestaurantInfoDto">
+		<fieldDescription><![CDATA[restaurantInfo]]></fieldDescription>
+	</field>
+	<field name="bill" class="in.cw.sense.api.bo.bill.dto.BillDto">
+		<fieldDescription><![CDATA[bill]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="87" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="190" y="0" width="174" height="16" isRemoveLineWhenBlank="true" uuid="b45b8bcc-9bcb-4e5a-99e1-31dc4225a3e2"/>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{restaurantInfo}.getName()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="190" y="14" width="174" height="16" isRemoveLineWhenBlank="true" uuid="2cbdba8c-bb48-4da0-b9a8-effea3029e52"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{restaurantInfo}.getTagline()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="191" y="26" width="174" height="16" isRemoveLineWhenBlank="true" uuid="609355ee-f0bf-4bc4-a372-dc9b3e02177c"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{restaurantInfo}.getAddress().getAddressLine1()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="191" y="40" width="174" height="16" isRemoveLineWhenBlank="true" uuid="196104f1-8857-4d74-a6db-c4e1e4e8982f"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{restaurantInfo}.getAddress().getAddressLine2()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="191" y="53" width="174" height="16" isRemoveLineWhenBlank="true" uuid="b1edde3f-ceee-4c0e-b781-21b90de20953"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{restaurantInfo}.getAddress().getCity() +" "+$F{restaurantInfo}.getAddress().getPinCode()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="178" y="71" width="199" height="16" isRemoveLineWhenBlank="true" uuid="283760e2-d263-4418-a395-05af93fa82f8"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["--------------------------------------------------------------------"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="191" y="65" width="174" height="16" isRemoveLineWhenBlank="true" uuid="22e35935-129e-484e-a441-78ddde71586b"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Phone : "+$F{restaurantInfo}.getPhone().getPhone1()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="47" splitType="Stretch">
+			<frame>
+				<reportElement x="180" y="-7" width="199" height="44" isRemoveLineWhenBlank="true" uuid="1b6a43cd-7bc9-4e83-a11f-9e53974b80cc"/>
+				<frame>
+					<reportElement x="0" y="0" width="95" height="44" uuid="25f05245-2755-4dd4-9e8a-61e85bd17bce"/>
+					<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+						<reportElement x="40" y="1" width="55" height="16" isRemoveLineWhenBlank="true" uuid="36b379d5-c305-40cd-ae94-8a829a2faa54"/>
+						<textFieldExpression><![CDATA[": "+$F{bill}.getId()]]></textFieldExpression>
+					</textField>
+					<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+						<reportElement x="40" y="14" width="55" height="16" isRemoveLineWhenBlank="true" uuid="37aa0202-1211-47f8-b348-d51c3e1f508f"/>
+						<textFieldExpression><![CDATA[": "+new SimpleDateFormat("MM-dd-yy").format($F{bill}.getCreatedDateTime())]]></textFieldExpression>
+					</textField>
+					<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+						<reportElement x="40" y="28" width="55" height="16" isRemoveLineWhenBlank="true" uuid="0bdd689c-131c-434a-8013-e1c9240014f8"/>
+						<textFieldExpression><![CDATA[": "+new SimpleDateFormat("hh:mm").format($F{bill}.getCreatedDateTime())]]></textFieldExpression>
+					</textField>
+					<staticText>
+						<reportElement x="0" y="1" width="40" height="16" uuid="6d6e52bc-9b2a-44b8-83f8-5c1750b2a9a1"/>
+						<text><![CDATA[Bill No.]]></text>
+					</staticText>
+					<staticText>
+						<reportElement x="0" y="14" width="40" height="16" uuid="85cc38c5-2278-46d6-ade0-4cf9f7021072"/>
+						<text><![CDATA[Date]]></text>
+					</staticText>
+					<staticText>
+						<reportElement x="0" y="28" width="40" height="16" uuid="88b09023-ba4a-4e5d-8b93-55c09624bd64"/>
+						<text><![CDATA[Time]]></text>
+					</staticText>
+				</frame>
+				<frame>
+					<reportElement x="104" y="0" width="95" height="44" uuid="c67dba71-3625-45f1-a900-9d1c7fe1ff89"/>
+					<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+						<reportElement x="40" y="28" width="55" height="16" isRemoveLineWhenBlank="true" uuid="d6446d32-0a0d-45a0-87f9-ad3ecaad7e2f"/>
+						<textFieldExpression><![CDATA[": "+"TextField"]]></textFieldExpression>
+					</textField>
+					<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+						<reportElement x="40" y="14" width="55" height="16" isRemoveLineWhenBlank="true" uuid="852aba61-15d6-477b-bb6d-caffbeaec924"/>
+						<textFieldExpression><![CDATA[": "+"TextField"]]></textFieldExpression>
+					</textField>
+					<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+						<reportElement x="40" y="1" width="55" height="16" isRemoveLineWhenBlank="true" uuid="a30d7dc1-afe8-4c54-9bbb-61473a4d4831"/>
+						<textFieldExpression><![CDATA[": "+$F{bill}.getTableNumber()]]></textFieldExpression>
+					</textField>
+					<staticText>
+						<reportElement x="0" y="14" width="40" height="16" uuid="9ecd6354-c33e-497d-b075-42e529710db5"/>
+						<text><![CDATA[Steward]]></text>
+					</staticText>
+					<staticText>
+						<reportElement x="0" y="28" width="40" height="16" uuid="8cdfcebf-4c67-4ea8-97a0-a757a538ec73"/>
+						<text><![CDATA[Covers]]></text>
+					</staticText>
+					<staticText>
+						<reportElement x="0" y="1" width="40" height="16" uuid="c923f8c9-6f14-4506-b29d-17553f096f16"/>
+						<text><![CDATA[Table]]></text>
+					</staticText>
+				</frame>
+			</frame>
+			<textField isBlankWhenNull="true">
+				<reportElement key="" x="178" y="31" width="199" height="16" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" uuid="9ef11702-828f-478f-bce7-abf565aa967d"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="43">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="180" y="-4" width="100" height="16" isRemoveLineWhenBlank="true" uuid="425b00f7-ec5c-489c-b1bb-b668fe753137"/>
+				<textElement textAlignment="Left">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Bar"]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="178" y="27" width="197" height="16" isRemoveLineWhenBlank="true" uuid="508b7746-3b39-4015-9d3d-fd2babf186eb">
+					<property name="net.sf.jasperreports.export.headertoolbar.table.name" value=""/>
+				</reportElement>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="itemsListDataset" uuid="f2f11cdd-524d-43e2-a907-a51aa7bfc636">
+						<dataSourceExpression><![CDATA[$P{barListDataSource}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="15" width="197">
+						<textField>
+							<reportElement x="2" y="0" width="120" height="15" uuid="54019947-171d-441a-b29d-512c909d1aa1"/>
+							<textElement textAlignment="Left"/>
+							<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement x="125" y="0" width="29" height="15" isRemoveLineWhenBlank="true" uuid="f0bdd16a-d8cd-4e05-b5ff-5c0012c83c94"/>
+							<textElement textAlignment="Left"/>
+							<textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="152" y="0" width="45" height="15" uuid="2558624b-2083-4fa5-b123-7eed0b0256c4"/>
+							<textElement textAlignment="Left"/>
+							<textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<textField isBlankWhenNull="true">
+				<reportElement x="180" y="12" width="100" height="16" isRemoveLineWhenBlank="true" uuid="caf71fdf-a97f-4aa1-bd96-037a03f8a858"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA["Item"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="302" y="12" width="22" height="16" isRemoveLineWhenBlank="true" uuid="fa660f5d-5ac9-42d2-a287-1dea97232e2a"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA["Qty"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="330" y="12" width="35" height="16" isRemoveLineWhenBlank="true" uuid="71d1d28a-ba4c-4b24-bc54-9023daf323df"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA["Value"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="29">
+			<frame>
+				<reportElement x="178" y="0" width="198" height="29" isRemoveLineWhenBlank="true" uuid="ba65b10e-ea40-423c-9308-f3e36d8cbbb4"/>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="2" y="0" width="76" height="15" isRemoveLineWhenBlank="true" uuid="5f497814-5d8c-4bad-b7a5-c0e919cab6a3"/>
+					<textElement textAlignment="Left"/>
+					<textFieldExpression><![CDATA[($F{bill}.getDiscount().getBar().getAmount()==null?null:"Discount")]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="153" y="0" width="45" height="15" isRemoveLineWhenBlank="true" uuid="4df342c7-eff6-4da3-b934-2fb06788ed5e"/>
+					<textElement textAlignment="Left"/>
+					<textFieldExpression><![CDATA[$F{bill}.getDiscount().getBar().getAmount()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="95" y="0" width="44" height="15" isRemoveLineWhenBlank="true" uuid="5ec36e20-c284-4fde-878f-6721e523b262"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[($F{bill}.getDiscount().getBar().getValue()==null?null:"@"+$F{bill}.getDiscount().getBar().getValue()+"%")]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="2" y="14" width="76" height="15" isRemoveLineWhenBlank="true" uuid="f75c3f58-f8d7-495b-ba78-a3b3bdb9c467"/>
+					<textElement textAlignment="Left">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["SubTotal"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="114" y="14" width="29" height="15" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" uuid="f8a72098-6a6c-4ac0-a66a-e6cacadabca8"/>
+					<textElement textAlignment="Center">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bill}.getItemCount().getLiquor()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="153" y="14" width="45" height="13" isRemoveLineWhenBlank="true" uuid="f2e13b64-dd94-4551-9182-1c93cb49d69b"/>
+					<textElement textAlignment="Left">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bill}.getSubTotal().getLiquor()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+		<band height="15">
+			<componentElement>
+				<reportElement x="178" y="0" width="197" height="15" isRemoveLineWhenBlank="true" uuid="14247065-aa7e-4a31-9d0a-b0b1739641bf"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="chargesDataset" uuid="4bbae479-574d-4a96-a4a5-cab6c3b14a12">
+						<dataSourceExpression><![CDATA[$P{barChargeDataSource}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="15" width="197">
+						<textField>
+							<reportElement x="2" y="0" width="98" height="15" uuid="6822a84a-6138-4bac-8fa0-4baf51891838"/>
+							<textElement textAlignment="Left"/>
+							<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement x="103" y="0" width="47" height="15" isRemoveLineWhenBlank="true" uuid="c85439d2-1b0f-4557-97fe-741dbaf61e2f"/>
+							<textElement textAlignment="Left"/>
+							<textFieldExpression><![CDATA["@"+$F{liquor}.getRate()+"%"]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="152" y="0" width="45" height="15" uuid="44edde77-d91a-41f1-872a-b78bfa6c3dd6"/>
+							<textElement textAlignment="Left"/>
+							<textFieldExpression><![CDATA[$F{liquor}.getValue()]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+		<band height="13">
+			<frame>
+				<reportElement x="180" y="0" width="195" height="13" isRemoveLineWhenBlank="true" uuid="60057e7f-df8a-471d-b425-13325f3d0af7"/>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="0" y="0" width="76" height="13" isRemoveLineWhenBlank="true" uuid="60c197ed-9a6c-4f19-8435-64d8e4f787b3"/>
+					<textElement textAlignment="Left">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Total(Exc.Taxes)"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="150" y="0" width="45" height="13" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" uuid="21ce0877-d4b3-4121-ac62-bff060fccae9"/>
+					<textElement textAlignment="Left">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bill}.getSubTotalExclusive().getLiquor()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+		<band height="5">
+			<componentElement>
+				<reportElement x="179" y="-10" width="197" height="15" isRemoveLineWhenBlank="true" uuid="0807c128-ed70-4f99-8249-ad7eb13dfc74"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="taxesDataset" uuid="22dd9766-baa6-4ee4-8f0e-c674258e91b3">
+						<dataSourceExpression><![CDATA[$P{barTaxesDataSource}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="15" width="197">
+						<textField>
+							<reportElement x="2" y="0" width="98" height="15" uuid="2fe5b499-4cc1-461d-9d41-03aed3efe43c"/>
+							<textElement textAlignment="Left"/>
+							<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement x="103" y="0" width="47" height="15" isRemoveLineWhenBlank="true" uuid="1d64b79b-9fcd-4ced-8742-18adcdd636f7"/>
+							<textElement textAlignment="Left"/>
+							<textFieldExpression><![CDATA["@"+$F{liquor}.getRate()+"%"]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="152" y="0" width="45" height="15" uuid="21a43663-5a52-4c8c-9610-d2db42657610"/>
+							<textElement textAlignment="Left"/>
+							<textFieldExpression><![CDATA[$F{liquor}.getValue()]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+		<band height="37">
+			<frame>
+				<reportElement x="180" y="0" width="200" height="37" isRemoveLineWhenBlank="true" uuid="2610f14f-a76c-467d-b5f7-273262a0dc39"/>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="1" y="0" width="199" height="19" isRemoveLineWhenBlank="true" uuid="4dc5eb68-e823-4a09-bbe1-fc551596bfda"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA["- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="" x="0" y="10" width="104" height="16" isRemoveLineWhenBlank="true" uuid="451aead1-1750-4c53-bf47-4fad27d52f25"/>
+					<textElement textAlignment="Left">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["BAR Total(Inc.Taxes)"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="144" y="8" width="51" height="18" isRemoveLineWhenBlank="true" uuid="a7083ff5-0de1-474c-9792-872f15618655"/>
+					<textElement textAlignment="Left">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bill}.getSubTotalInclusive().getLiquor()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="0" y="18" width="199" height="19" isRemoveLineWhenBlank="true" uuid="948f6e3d-720b-4651-bcdc-eab1f9f2d0e4"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA["- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement x="207" y="0" width="140" height="20" uuid="26d52745-c9ca-4ba3-9ed4-1e94437c3052"/>
+				<text><![CDATA[THANK YOU......VISIT AGAIN]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

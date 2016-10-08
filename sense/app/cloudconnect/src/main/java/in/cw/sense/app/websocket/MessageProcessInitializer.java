@@ -2,6 +2,7 @@ package in.cw.sense.app.websocket;
 
 import javax.websocket.Session;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
@@ -13,9 +14,10 @@ import in.cw.csense.app.message.element.MessageElementAdaptor;
 
 @Component
 public class MessageProcessInitializer {
+	@Autowired LocalMessageProcessorImpl messageProcessor;
+
 	public void process(String message, Session session) {
 		Message messageObj = getMessageObjectFromJson(message);
-		final LocalMessageProcessorImpl messageProcessor = new LocalMessageProcessorImpl();
 		messageObj.getMessageElement().accept(messageProcessor, session);
 	}
 

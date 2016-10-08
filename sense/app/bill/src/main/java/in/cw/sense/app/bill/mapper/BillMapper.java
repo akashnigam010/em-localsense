@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import cwf.date.CwfClock;
+import cwf.helper.security.jwt.JwtTokenHelper;
 import in.cw.sense.api.bo.bill.dto.BillDto;
 import in.cw.sense.api.bo.bill.dto.ChargeDto;
 import in.cw.sense.api.bo.bill.dto.DiscountDto;
@@ -27,12 +28,13 @@ import in.cw.sense.api.bo.table.dto.TableDto;
 
 @Component
 public class BillMapper {
-	@Autowired
-	CwfClock clock;
+	@Autowired CwfClock clock;
+	@Autowired JwtTokenHelper jwtTokenHelper;
 
 	public void mapTableOrderDetailsToBill(TableDto tableDto, BillEntity to) {
-		to.setPersonName("DEAFULT");
+		to.setPersonName(jwtTokenHelper.getUserName());
 		to.setTableId(tableDto.getId());
+		to.setCovers(tableDto.getCovers());
 		to.setTableNumber(tableDto.getTableNumber());
 		if (to.getCreatedDateTime() == null) {
 			to.setCreatedDateTime(clock.cal().getTime());
@@ -64,6 +66,7 @@ public class BillMapper {
 		to.setPersonName(from.getPersonName());
 		to.setSubTotal(mapBillTotalEntityToDto(from.getSubTotal()));
 		to.setTableNumber(from.getTableNumber());
+		to.setCovers(from.getCovers());
 		to.setSubTotalExclusive(mapBillTotalEntityToDto(from.getSubTotalExclusive()));
 		to.setSubTotalInclusive(mapBillTotalEntityToDto(from.getSubTotalInclusive()));
 		to.setItemCount(mapItemCount(from.getItemCount()));

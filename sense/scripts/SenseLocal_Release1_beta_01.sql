@@ -7,7 +7,6 @@ db.createCollection("item");
 db.createCollection("contact_support");
 db.createCollection("personnel");
 db.createCollection("message");
-db.createCollection("role");
 db.createCollection("sequence");
 db.createCollection("table");
 db.createCollection("table_seating_area");

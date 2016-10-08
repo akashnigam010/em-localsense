@@ -5,6 +5,9 @@ import java.util.List;
 import javax.websocket.Session;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.stereotype.Service;
 
 import in.cw.csense.app.message.element.BillAckMessageElement;
 import in.cw.csense.app.message.element.BillDetailMessageElement;
@@ -14,9 +17,18 @@ import in.cw.csense.app.message.element.RequestMessageElement;
 import in.cw.csense.app.message.processor.MessageProcessor;
 import in.cw.csense.app.socket.SessionCollector;
 import in.cw.sense.api.bo.bill.dto.BillDto;
+import in.cw.sense.api.bo.bill.entity.BillEntity;
+import in.cw.sense.api.bo.bill.type.CloudSyncStatusType;
 import in.cw.sense.api.bo.setting.dto.CloudConnectDto;
 
+@Service
 public class LocalMessageProcessorImpl implements MessageProcessor {
+	@Autowired MongoTemplate senseMongoTemplate;
+	
+	public void setSenseMongoTemplate(MongoTemplate senseMongoTemplate) {
+		this.senseMongoTemplate = senseMongoTemplate;
+	}
+	
 	private static final Logger LOG = Logger.getLogger(LocalMessageProcessorImpl.class);
 
 	@Override
@@ -78,14 +90,29 @@ public class LocalMessageProcessorImpl implements MessageProcessor {
 				LOG.debug("No bills were sucessfully processed....");
 			} else {
 				for (Integer billId : success) {
-					LOG.debug("sucess bill id : " + billId);
+					LOG.debug("Updating local sync status for bill id : " + billId);
+					try {
+						updateBillSyncStatus(billId, CloudSyncStatusType.IN_SYNC);
+					} catch (Exception e) {
+						LOG.error("Exception occured while updating cloud sync status on local DB", e);
+					}
 				}
 			}
 
 			if (!failed.isEmpty()) {
 				for (Integer billId : failed) {
-					LOG.debug("Failed bill id : " + billId);
+					LOG.debug("List of bill ids which were failed in cloud sync : " + billId);
 				}
+			}
+		}
+	}
+	
+	public void updateBillSyncStatus(Integer billId, CloudSyncStatusType syncStatus) throws Exception {
+		if (billId != null && syncStatus != null) {
+			BillEntity bill = senseMongoTemplate.findById(billId, BillEntity.class);
+			if (bill != null) {
+				bill.setSyncStatus(syncStatus);
+				senseMongoTemplate.save(bill);
 			}
 		}
 	}

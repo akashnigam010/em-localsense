@@ -1,0 +1,80 @@
+<md-dialog aria-label="Edit Bill" ng-cloak style="width: 50%;">
+    <form name="editBillForm" novalidate autocomplete="off">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Edit Bill</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon aria-label="Close dialog">
+                        <i class="fa fa-times"></i>
+                    </md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <div flex layout="column" layout-wrap layout-align="center stretch">
+                    <md-input-container flex class="md-block">
+                        <md-icon><i class="fa fa-star" aria-hidden="true"></i></md-icon>
+                        <div flex layout="row">
+                            <span flex="30">BILL NO. :</span>
+                            <span><b>{{editBillModalObj.id}}</b></span>
+                        </div>
+                    </md-input-container>
+                    <md-input-container flex class="md-block">
+                        <md-icon><i class="fa fa-heart" aria-hidden="true"></i></md-icon>
+                        <div flex layout="row">
+                            <span flex="30">DISCOUNT :</span>
+                            <div flex layout="column">
+                                <div flex layout="row">
+                                    <span flex="25">F&B :</span>
+                                    <span flex><p style="color: red"><i class="fa fa-inr" aria-hidden="true"></i>
+                                    &nbsp{{editBillModalObj.discount.fnb.amount > 0?editBillModalObj.discount.fnb.amount:0}}</p></span>
+                                </div>
+                                <div flex layout="row" ng-if="editBillModalObj.discount.bar.amount > 0">
+                                    <span flex="25">BAR :</span>
+                                    <span flex><p style="color: red"><i class="fa fa-inr" aria-hidden="true"></i>
+                                    &nbsp{{editBillModalObj.discount.bar.amount}}</p></span>
+                                </div>
+                            </div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container flex class="md-block">
+                        <md-icon><i class="fa fa-inr" aria-hidden="true"></i></md-icon>
+                        <div layout="row">
+                            <span flex="30">GRAND TOTAL :</span>
+                            <span><b style="color: green"><i class="fa fa-inr" aria-hidden="true"></i>&nbsp
+                            {{editBillModalObj.grandTotal}}</b></span>
+                        </div>
+                    </md-input-container>
+                    <md-input-container flex class="md-block">
+                        <md-icon><i class="fa fa-credit-card" aria-hidden="true"></i></md-icon>
+                        <label>Payment</label>
+                        <md-select required name="settlement" ng-model="editBillModalObj.settlement" aria-label="payment">
+                            <md-option value="1">Paid by Cash</md-option>
+                            <md-option value="2">Paid by Card</md-option>
+                            <md-option value="3">Complimentary</md-option>
+                            <md-option value="4">Coupon</md-option>
+                            <md-option value="5"><b style="color: red">Cancelled</b></md-option>
+                        </md-select>
+                        <div ng-messages="editBillForm.settlement.$error">
+                            <div ng-message="required">This is required</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container flex class="md-block" ng-if="editBillModalObj.settlement == 5">
+                        <label>Reason for cancel</label>
+                        <md-icon><i class="fa fa-pencil-square-o" aria-hidden="true"></i></md-icon>
+                        <input required name="cancelReason" ng-model="editBillModalObj.cancelReason">
+                        <div ng-messages="editBillForm.cancelReason.$error">
+                            <div ng-message="required">This is required</div>
+                        </div>
+                    </md-input-container>
+                </div>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="center center">
+            <md-button type="submit" ng-click="editBillForm.$valid && answer(true)">Update</md-button>
+            <md-button ng-click="answer(false)">Cancel</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

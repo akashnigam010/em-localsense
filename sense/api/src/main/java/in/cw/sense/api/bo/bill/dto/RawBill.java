@@ -54,8 +54,43 @@ public class RawBill {
 		return barItems;
 	}
 
-	public Date getBillDate() {
-		Date date = new Date();
-		return date;
+	public List<ChargeDto> getFnbInternalCharges() {
+		List<ChargeDto> fnbCharges = new ArrayList<>();
+		for (ChargeDto charge : this.bill.getInternalCharges()) {
+			if (charge.getFnb() != null) {
+				fnbCharges.add(charge);
+			}
+		}
+		return fnbCharges;
+	}
+
+	public List<ChargeDto> getBarInternalCharges() {
+		List<ChargeDto> barCharges = new ArrayList<>();
+		for (ChargeDto charge : this.bill.getInternalCharges()) {
+			if (charge.getLiquor() != null) {
+				barCharges.add(charge);
+			}
+		}
+		return barCharges;
+	}
+
+	public List<ChargeDto> getFnbTaxes() {
+		List<ChargeDto> fnbTaxes = new ArrayList<>();
+		for (ChargeDto charge : this.bill.getTaxes()) {
+			if (charge.getFnb() != null) {
+				fnbTaxes.add(charge);
+			}
+		}
+		return fnbTaxes;
+	}
+
+	public List<ChargeDto> getBarTaxes() {
+		List<ChargeDto> barTaxes = new ArrayList<>();
+		for (ChargeDto charge : this.bill.getTaxes()) {
+			if (charge.getLiquor() != null) {
+				barTaxes.add(charge);
+			}
+		}
+		return barTaxes;
 	}
 }

@@ -46,6 +46,7 @@ import in.cw.sense.api.bo.tax.entity.TaxDetailsEntity;
 import in.cw.sense.app.bill.mapper.BillMapper;
 import in.cw.sense.app.bill.type.BillDetailsErrorCodeType;
 import in.cw.sense.app.bill.util.BillEmailCreator;
+import in.cw.sense.app.bill.util.BillPdfGenerator;
 import in.cw.sense.app.bill.util.InternalChargesAndTaxCalculationEngine;
 import in.cw.sense.app.restaurantinfo.RestaurantInfoDelegate;
 import in.cw.sense.app.tabledetails.TableDetailsDelegate;
@@ -63,6 +64,7 @@ public class BillDelegate {
 	@Autowired CwfClock clock;
 	@Autowired RestaurantInfoDelegate restaurantInfoDelegate;
 	@Autowired BillEmailCreator emailCreator;
+	@Autowired BillPdfGenerator pdfGenerator;
 
 	public List<BillDto> goToBill(Integer tableId) throws BusinessException {
 		List<BillDto> bills = new ArrayList<>();
@@ -190,33 +192,12 @@ public class BillDelegate {
 	}
 
 	public void emailBill(BillIdRequest request) throws BusinessException {
-		RestaurantInfoResponse restaurantInfo = restaurantInfoDelegate.getRestaurantInformation();
-		BillEntity bill = dao.getBill(request.getBillId());
-		BillDto billDto = new BillDto();
-		mapper.mapBillEntityToDto(bill, billDto);
-		RawBill rawBill = new RawBill(restaurantInfo.getRestaurantInfo(), billDto);
-		String emailBody = emailCreator.getBillEmailBody(rawBill);
-		BufferedWriter writer = null;
-		try
-		{
-		    writer = new BufferedWriter( new FileWriter( "/Users/aknigam/Documents/Work/htmlEmail.txt"));
-		    writer.write( emailBody);
-
-		}
-		catch ( IOException e)
-		{
-		}
-		finally
-		{
-		    try
-		    {
-		        if ( writer != null)
-		        writer.close( );
-		    }
-		    catch ( IOException e)
-		    {
-		    }
-		}
+//		RestaurantInfoResponse restaurantInfo = restaurantInfoDelegate.getRestaurantInformation();
+//		BillEntity bill = dao.getBill(request.getBillId());
+//		BillDto billDto = new BillDto();
+//		mapper.mapBillEntityToDto(bill, billDto);
+//		RawBill rawBill = new RawBill(restaurantInfo.getRestaurantInfo(), billDto);
+		
 	}
 	
 	public void printBill(BillIdRequest request) throws BusinessException {
@@ -225,7 +206,7 @@ public class BillDelegate {
 		BillDto billDto = new BillDto();
 		mapper.mapBillEntityToDto(bill, billDto);
 		RawBill rawBill = new RawBill(restaurantInfo.getRestaurantInfo(), billDto);
-		//TODO: Print Bill Copy
+		pdfGenerator.generatePDF(rawBill);
 	}
 	
 	private BillDto addOrderItemsAndCalculateBill(List<OrderUnit> orders, Integer tableId) throws BusinessException {
@@ -334,12 +315,14 @@ public class BillDelegate {
 		bill.setGrandTotal(grandTotal);
 	}
 
-	public BillDto settleBill(SettleBillRequest request) throws BusinessException {
+	public BillDto settleOrEditBill(SettleBillRequest request, boolean isSettle) throws BusinessException {
 		BillDto billDto = new BillDto();
 		BillEntity bill = dao.getBill(request.getBillId());
-		validateBillDetails(bill);
-		// Update BillEntity for settleBill
-		if (PaymentModeType.CANCELLED == PaymentModeType.getPaymentModeByCode(request.getPaymentMode())) {
+		if (bill == null) {
+			throw new BusinessException(BillDetailsErrorCodeType.BILL_DETAILS_NOT_FOUND);
+		}
+		PaymentModeType paymentModeType = PaymentModeType.getPaymentModeByCode(request.getPaymentMode());
+		if (PaymentModeType.CANCELLED == paymentModeType) {
 			bill.setStatus(BillStatusType.CANCELLED);
 			bill.setReasonForCancel(request.getReasonForCancel());
 		} else {
@@ -351,21 +334,11 @@ public class BillDelegate {
 		bill.setSettledDateTime(settleDateTime);
 		bill.setSettledDateTimeToDisplay(settleDateTime.toString());
 		bill = dao.saveBill(bill);
-		// Update table details for closing table
-		closeTableAndBackUpKotDetails(bill.getTableId(), bill.getId());
+		if (isSettle) {
+			closeTableAndBackUpKotDetails(bill.getTableId(), bill.getId());
+		}		
 		mapper.mapBillEntityToDto(bill, billDto);
 		return billDto;
-	}
-
-	private void validateBillDetails(BillEntity bill) throws BusinessException {
-		if (bill == null) {
-			throw new BusinessException(BillDetailsErrorCodeType.BILL_DETAILS_NOT_FOUND);
-		}
-		if (BillStatusType.SETTLED == bill.getStatus()) {
-			throw new BusinessException(BillDetailsErrorCodeType.BILL_SETTLED_EARLIER);
-		} else if (BillStatusType.CANCELLED == bill.getStatus()) {
-			throw new BusinessException(BillDetailsErrorCodeType.BILL_CANCELLED_EARLIER);
-		}
 	}
 
 	private void closeTableAndBackUpKotDetails(Integer tableId, Integer billId) throws BusinessException {
