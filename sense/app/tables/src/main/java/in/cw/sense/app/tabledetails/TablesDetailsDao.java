@@ -336,8 +336,6 @@ public class TablesDetailsDao {
 				throw e;
 			}
 			throw new BusinessException(GenericErrorCodeType.GENERIC_ERROR, e.getMessage());
-		} finally {
-			senseMongoTemplate.getDb().getMongo().close();
 		}
 	}
 
