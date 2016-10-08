@@ -5,11 +5,9 @@ import java.util.List;
 import javax.websocket.Session;
 
 import org.apache.log4j.Logger;
-import org.springframework.data.mongodb.MongoDbFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
-
-import com.mongodb.MongoClient;
+import org.springframework.stereotype.Service;
 
 import in.cw.csense.app.message.element.BillAckMessageElement;
 import in.cw.csense.app.message.element.BillDetailMessageElement;
@@ -23,7 +21,14 @@ import in.cw.sense.api.bo.bill.entity.BillEntity;
 import in.cw.sense.api.bo.bill.type.CloudSyncStatusType;
 import in.cw.sense.api.bo.setting.dto.CloudConnectDto;
 
+@Service
 public class LocalMessageProcessorImpl implements MessageProcessor {
+	@Autowired MongoTemplate senseMongoTemplate;
+	
+	public void setSenseMongoTemplate(MongoTemplate senseMongoTemplate) {
+		this.senseMongoTemplate = senseMongoTemplate;
+	}
+	
 	private static final Logger LOG = Logger.getLogger(LocalMessageProcessorImpl.class);
 
 	@Override
@@ -104,21 +109,11 @@ public class LocalMessageProcessorImpl implements MessageProcessor {
 	
 	public void updateBillSyncStatus(Integer billId, CloudSyncStatusType syncStatus) throws Exception {
 		if (billId != null && syncStatus != null) {
-			BillEntity bill = mongoTemplate().findById(billId, BillEntity.class);
+			BillEntity bill = senseMongoTemplate.findById(billId, BillEntity.class);
 			if (bill != null) {
 				bill.setSyncStatus(syncStatus);
-				mongoTemplate().save(bill);
+				senseMongoTemplate.save(bill);
 			}
 		}
-	}
-	
-	//ToDo : Remove This once autowiring is done
-	public MongoDbFactory mongoDbFactory() throws Exception {
-		return new SimpleMongoDbFactory(new MongoClient("localhost", 27017), "sense-local-db");
-	}
-
-	public MongoTemplate mongoTemplate() throws Exception {
-		MongoTemplate mongoTemplate = new MongoTemplate(mongoDbFactory());
-		return mongoTemplate;
 	}
 }
