@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import cwf.date.CwfClock;
+import cwf.helper.security.jwt.JwtTokenHelper;
 import in.cw.sense.api.bo.bill.dto.BillDto;
 import in.cw.sense.api.bo.bill.dto.ChargeDto;
 import in.cw.sense.api.bo.bill.dto.DiscountDto;
@@ -27,11 +28,11 @@ import in.cw.sense.api.bo.table.dto.TableDto;
 
 @Component
 public class BillMapper {
-	@Autowired
-	CwfClock clock;
+	@Autowired CwfClock clock;
+	@Autowired JwtTokenHelper jwtTokenHelper;
 
 	public void mapTableOrderDetailsToBill(TableDto tableDto, BillEntity to) {
-		to.setPersonName("DEAFULT");
+		to.setPersonName(jwtTokenHelper.getUserName());
 		to.setTableId(tableDto.getId());
 		to.setCovers(tableDto.getCovers());
 		to.setTableNumber(tableDto.getTableNumber());
@@ -151,6 +152,7 @@ public class BillMapper {
 	private TotalDto mapBillTotalEntityToDto(TotalEntity totalEntity) {
 		TotalDto total = new TotalDto();
 		if (totalEntity != null) {
+			total.setName(totalEntity.getName());
 			total.setFnb(totalEntity.getFnb());
 			total.setLiquor(totalEntity.getLiquor());
 		}

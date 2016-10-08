@@ -19,6 +19,7 @@ public class RestaurantInfoMapper {
 
 	public RestaurantInfoDto mapRestaurantInfoEntityToDto(RestaurantInfo entity) {
 		RestaurantInfoDto dto = new RestaurantInfoDto();
+		dto.setId(entity.getId());
 		dto.setName(entity.getName());
 		if (StringUtils.isNotEmpty(entity.getTagline())) {
 			dto.setTagline(entity.getTagline());

@@ -25,37 +25,41 @@ import in.cw.sense.app.tabledetails.TablesDetailsDao;
 
 @Repository
 public class BillDao {
-	@Autowired SequenceDao sequenceDao;
-	@Autowired BillMapper mapper;
-	@Autowired TablesDetailsDao tablesDao;
-	@Autowired MongoTemplate senseMongoTemplate;
-	
+	@Autowired
+	SequenceDao sequenceDao;
+	@Autowired
+	BillMapper mapper;
+	@Autowired
+	TablesDetailsDao tablesDao;
+	@Autowired
+	MongoTemplate senseMongoTemplate;
+
 	private static final Logger LOG = Logger.getLogger(BillDao.class);
 	private static final String ID = "_id";
 	private static final String TABLE_ID = "tableId";
 	private static final String BILL_SEQ = "bill_seq";
 	private static final String BILL_STATUS = "status";
 	private static final String SYNC_STATUS = "syncStatus";
-	
+
 	public void setSenseMongoTemplate(MongoTemplate senseMongoTemplate) {
 		this.senseMongoTemplate = senseMongoTemplate;
 	}
-	
+
 	public BillEntity getBillForATable(Integer tableId, Integer billId) throws BusinessException {
 		try {
 			Query findQuery = Query.query(Criteria.where(ID).is(billId))
 					.addCriteria(Criteria.where(TABLE_ID).is(tableId));
 			return senseMongoTemplate.findOne(findQuery, BillEntity.class);
 		} catch (Exception e) {
-			LOG.error("Exception occured while fetching bill details for tableId: "+ tableId, e);
+			LOG.error("Exception occured while fetching bill details for tableId: " + tableId, e);
 			throw new BusinessException(GenericErrorCodeType.GENERIC_ERROR, e.getMessage());
 		}
 	}
-	
+
 	public List<BillDto> getSettledBills(Date startDate, Date endDate) throws BusinessException {
 		try {
 			Query findQuery = Query.query(Criteria.where(BILL_STATUS).is(BillStatusType.SETTLED.getStatus()))
-						.addCriteria(Criteria.where("createdDateTime").gte(startDate).lt(endDate));
+					.addCriteria(Criteria.where("createdDateTime").gte(startDate).lt(endDate));
 			List<BillEntity> bills = senseMongoTemplate.find(findQuery, BillEntity.class);
 			return mapper.mapBillEntitiesToDtos(bills);
 		} catch (Exception e) {
@@ -63,9 +67,8 @@ public class BillDao {
 			throw new BusinessException(GenericErrorCodeType.GENERIC_ERROR, e.getMessage());
 		}
 	}
-	
-	public BillEntity addOrderItemsToBill(List<OrderUnit> orders, Integer tableId) 
-			throws BusinessException {
+
+	public BillEntity addOrderItemsToBill(List<OrderUnit> orders, Integer tableId) throws BusinessException {
 		int billId = sequenceDao.getNextSequenceId(BILL_SEQ);
 		BillEntity bill = new BillEntity();
 		bill.setId(billId);
@@ -74,8 +77,8 @@ public class BillDao {
 		senseMongoTemplate.save(bill);
 		return bill;
 	}
-	
-	public BillEntity updateTableOrdersToBill(List<OrderUnit> orders, Integer billId, Integer tableId) 
+
+	public BillEntity updateTableOrdersToBill(List<OrderUnit> orders, Integer billId, Integer tableId)
 			throws BusinessException {
 		BillEntity bill = senseMongoTemplate.findById(billId, BillEntity.class);
 		if (bill == null) {
@@ -91,7 +94,7 @@ public class BillDao {
 		senseMongoTemplate.save(bill);
 		return bill;
 	}
-	
+
 	public BillEntity getBill(Integer id) {
 		return senseMongoTemplate.findById(id, BillEntity.class);
 	}
@@ -100,25 +103,27 @@ public class BillDao {
 		Query findQuery = Query.query(Criteria.where("billIds").in(billId));
 		return senseMongoTemplate.find(findQuery, Kot.class);
 	}
-	
 
 	public void saveKot(Kot kot) {
 		senseMongoTemplate.save(kot);
 	}
-	
+
 	/**
-	 * This method returns the list of all bill dto objects which is not syned to cloud.
+	 * This method returns the list of all bill dto objects which is not syned
+	 * to cloud.
 	 * 
-	 * @return	Collection of bill dto object, which is not synced to cloud database.
-	 * @throws BusinessException in case of any exception.
-	 * TODO: convert to BillDto - Himant
+	 * @return Collection of bill dto object, which is not synced to cloud
+	 *         database.
+	 * @throws BusinessException
+	 *             in case of any exception. TODO: convert to BillDto - Himant
 	 */
-	public List<BillEntity> getAllNonSynchedBills() throws BusinessException {
+	public List<BillDto> getAllNonSynchedBills() throws BusinessException {
 		try {
-			Query findQuery = Query.query(Criteria.where(SYNC_STATUS).is(CloudSyncStatusType.NOT_IN_SYNC.getSyncStatus()))
-						.addCriteria(Criteria.where(BILL_STATUS).is(BillStatusType.SETTLED.getStatus()));
+			Query findQuery = Query
+					.query(Criteria.where(SYNC_STATUS).is(CloudSyncStatusType.NOT_IN_SYNC.getSyncStatus()))
+					.addCriteria(Criteria.where(BILL_STATUS).is(BillStatusType.SETTLED.getStatus()));
 			List<BillEntity> bills = senseMongoTemplate.find(findQuery, BillEntity.class);
-			return bills;
+			return mapper.mapBillEntitiesToDtos(bills);
 		} catch (Exception e) {
 			LOG.error("Exception occured while fetching all bill details", e);
 			throw new BusinessException(GenericErrorCodeType.GENERIC_ERROR, e.getMessage());

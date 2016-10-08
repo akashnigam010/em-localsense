@@ -1,12 +1,21 @@
 package in.cw.sense.api.bo.restaurant.dto;
 
 public class RestaurantInfoDto {
+	private Integer id;
 	private String name;
 	private String tagline;
 	private Integer barInfoType;
 	private AddressDto address;
 	private PhoneDto phone;
 	private AdditionalDetailsDto additionalDetails;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;

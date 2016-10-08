@@ -1,6 +1,7 @@
 
 package in.cw.sense.app.service;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import in.cw.sense.app.services.CloudConnectServiceImpl;
 
 @Controller
 public class HelloWorldController {
+	private static final Logger LOG = Logger.getLogger(HelloWorldController.class);
 	
 	@Autowired
 	BillSynchService billSynchService;// = new BillSynchServiceImpl();

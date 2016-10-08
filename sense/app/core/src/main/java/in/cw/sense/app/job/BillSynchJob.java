@@ -10,7 +10,7 @@ public class BillSynchJob {
 	@Autowired
 	BillSynchService billService;
 
-	@Scheduled(fixedDelay = 5000)
+	@Scheduled(fixedDelay = 15000)
 	public void synchBillFromLocalToCloud() {
 		billService.syncBillToCloud();
 	}

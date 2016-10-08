@@ -5,6 +5,8 @@ import java.net.URISyntaxException;
 
 import javax.websocket.DeploymentException;
 
+import org.apache.log4j.Logger;
+
 import cwf.helper.InternetAvailabilityChecker;
 import cwf.helper.exception.BusinessException;
 import in.cw.csense.app.message.element.Message;
@@ -18,37 +20,32 @@ import in.cw.sense.app.websocket.LSClient;
  *
  */
 public class MessageSenderHelper {
-
+	private static final Logger LOG = Logger.getLogger(MessageSenderHelper.class);
 	private static LSClient lsClient;
-
-	public MessageSenderHelper() {
-
-	}
 
 	public void initiateConnection() {
 		InternetAvailabilityChecker checker = new InternetAvailabilityChecker();
 		try {
 			if (checker.isInternetAvailable()) {
-				System.out.println("hello ");
+				LOG.debug("Checking your internet availalbility...");
 				lsClient = LSClient.getInstance();
 			} else {
-				System.out.println("Internet connection not available.....");
+				LOG.error("Internet connection not available..... Please check internet availability");
 			}
 		} catch (IOException | DeploymentException | URISyntaxException e) {
-			e.printStackTrace();
+			LOG.error("Unexpected exception occured while fetching LSClient.. ", e);
 		}
 	}
 
-	public void sendMessage(Message message) throws BusinessException, InterruptedException {
+	public void sendMessage(Message message) throws BusinessException {
 		try {
 			if (lsClient != null && lsClient.isSessionOpen()) {
 				lsClient.sendMessage(JsonUtil.toJson(message));
 			} else {
-				System.out.println("Session is closed, cant send message now..");
+				LOG.error("Session is closed, cant send message now... ");
 			}
 		} catch (BusinessException e) {
 			throw e;
 		}
 	}
-
 }
