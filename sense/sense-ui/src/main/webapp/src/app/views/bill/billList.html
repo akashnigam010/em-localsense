@@ -73,7 +73,7 @@
                     <p>{{bill.tableNumber}}</p>
                 </div>
                 <div flex="25">
-                    <p style="color: green;">SETTLED</p>
+                    <p ng-style="bill.status == 'SETTLED'?{'color': 'green'}:{'color': 'red'}">{{bill.status}}</p>
                 </div>
                 <div flex="30">
                     <p><i class="fa fa-inr" aria-hidden="true"></i>{{bill.grandTotal}}</p>

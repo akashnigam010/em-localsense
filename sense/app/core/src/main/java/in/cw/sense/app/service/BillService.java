@@ -107,7 +107,20 @@ public class BillService {
 		SettleBillResponse response = new SettleBillResponse();
 		try {
 			validator.validateSettleBillRequest(request);
-			BillDto billDto = delegate.settleBill(request);
+			BillDto billDto = delegate.settleOrEditBill(request, true);
+			response.setBill(billDto);
+			return helper.success(response);
+		} catch (BusinessException e) {
+			return helper.failure(response, e);
+		}
+	}
+	
+	@RequestMapping(value = "/editBill", method = RequestMethod.POST, headers = "Accept=application/json")
+	public SettleBillResponse editBill(@RequestBody SettleBillRequest request) {
+		SettleBillResponse response = new SettleBillResponse();
+		try {
+			validator.validateSettleBillRequest(request);
+			BillDto billDto = delegate.settleOrEditBill(request, false);
 			response.setBill(billDto);
 			return helper.success(response);
 		} catch (BusinessException e) {

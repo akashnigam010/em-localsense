@@ -255,6 +255,16 @@ app.factory('Services', ['$http', function($http) {
             });
         },
 
+        editBill: function(url, obj, headers) {
+            return $http({
+                method: 'POST',
+                data: obj,
+                url: url + 'bill/editBill',
+                headers: headers,
+                async: false
+            });
+        },
+
         splitBill: function(url, obj, headers) {
             return $http({
                 method: 'POST',

@@ -1,5 +1,6 @@
 package in.cw.sense.app.bill;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -57,8 +58,11 @@ public class BillDao {
 	}
 
 	public List<BillDto> getSettledBills(Date startDate, Date endDate) throws BusinessException {
+		List<String> billStatuses = new ArrayList<>();
+		billStatuses.add(BillStatusType.SETTLED.getStatus());
+		billStatuses.add(BillStatusType.CANCELLED.getStatus());
 		try {
-			Query findQuery = Query.query(Criteria.where(BILL_STATUS).is(BillStatusType.SETTLED.getStatus()))
+			Query findQuery = Query.query(Criteria.where(BILL_STATUS).in(billStatuses))
 					.addCriteria(Criteria.where("createdDateTime").gte(startDate).lt(endDate));
 			List<BillEntity> bills = senseMongoTemplate.find(findQuery, BillEntity.class);
 			return mapper.mapBillEntitiesToDtos(bills);

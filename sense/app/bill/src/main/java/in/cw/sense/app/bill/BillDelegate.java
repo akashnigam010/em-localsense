@@ -315,12 +315,14 @@ public class BillDelegate {
 		bill.setGrandTotal(grandTotal);
 	}
 
-	public BillDto settleBill(SettleBillRequest request) throws BusinessException {
+	public BillDto settleOrEditBill(SettleBillRequest request, boolean isSettle) throws BusinessException {
 		BillDto billDto = new BillDto();
 		BillEntity bill = dao.getBill(request.getBillId());
-		validateBillDetails(bill);
-		// Update BillEntity for settleBill
-		if (PaymentModeType.CANCELLED == PaymentModeType.getPaymentModeByCode(request.getPaymentMode())) {
+		if (bill == null) {
+			throw new BusinessException(BillDetailsErrorCodeType.BILL_DETAILS_NOT_FOUND);
+		}
+		PaymentModeType paymentModeType = PaymentModeType.getPaymentModeByCode(request.getPaymentMode());
+		if (PaymentModeType.CANCELLED == paymentModeType) {
 			bill.setStatus(BillStatusType.CANCELLED);
 			bill.setReasonForCancel(request.getReasonForCancel());
 		} else {
@@ -332,21 +334,11 @@ public class BillDelegate {
 		bill.setSettledDateTime(settleDateTime);
 		bill.setSettledDateTimeToDisplay(settleDateTime.toString());
 		bill = dao.saveBill(bill);
-		// Update table details for closing table
-		closeTableAndBackUpKotDetails(bill.getTableId(), bill.getId());
+		if (isSettle) {
+			closeTableAndBackUpKotDetails(bill.getTableId(), bill.getId());
+		}		
 		mapper.mapBillEntityToDto(bill, billDto);
 		return billDto;
-	}
-
-	private void validateBillDetails(BillEntity bill) throws BusinessException {
-		if (bill == null) {
-			throw new BusinessException(BillDetailsErrorCodeType.BILL_DETAILS_NOT_FOUND);
-		}
-		if (BillStatusType.SETTLED == bill.getStatus()) {
-			throw new BusinessException(BillDetailsErrorCodeType.BILL_SETTLED_EARLIER);
-		} else if (BillStatusType.CANCELLED == bill.getStatus()) {
-			throw new BusinessException(BillDetailsErrorCodeType.BILL_CANCELLED_EARLIER);
-		}
 	}
 
 	private void closeTableAndBackUpKotDetails(Integer tableId, Integer billId) throws BusinessException {
