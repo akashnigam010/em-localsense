@@ -8,6 +8,7 @@ import javax.websocket.ClientEndpoint;
 import javax.websocket.ContainerProvider;
 import javax.websocket.DeploymentException;
 import javax.websocket.OnClose;
+import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
@@ -16,6 +17,7 @@ import javax.websocket.WebSocketContainer;
 import org.apache.log4j.Logger;
 
 import cwf.helper.exception.BusinessException;
+import in.cw.sense.app.socket.LocalApplicationContextProvider;
 import in.cw.sense.app.type.CloudSenseConnectErrorCodeType;
 
 /**
@@ -32,7 +34,7 @@ import in.cw.sense.app.type.CloudSenseConnectErrorCodeType;
 public class LSClient {
 	private static final Logger LOG = Logger.getLogger(LSClient.class);
 	// TODO : Replace the hard coded uri with value defined in properties file.
-	private final String uri = "ws://localhost:8087/cloudsense/server";
+	private final String uri = "ws://localhost:8087/cloudsense/server/abc";
 
 	/** Websocket session object. */
 	private Session session;
@@ -41,12 +43,20 @@ public class LSClient {
 	private static LSClient lsClient = null;
 
 	// @Autowired
-	// TODO : remove the direct initialization of the field, instead use autowire it.
-	private MessageProcessInitializer messageProcessInitializer = new MessageProcessInitializer();
+	// TODO : remove the direct initialization of the field, instead use
+	// autowire it.
+	private MessageProcessInitializer localMessageProcessInitializer;
 
 	private LSClient() throws DeploymentException, IOException, URISyntaxException {
 		WebSocketContainer container = ContainerProvider.getWebSocketContainer();
 		container.connectToServer(this, new URI(uri));
+	}
+
+	{
+		if (this.localMessageProcessInitializer == null) {
+			this.localMessageProcessInitializer = (MessageProcessInitializer) LocalApplicationContextProvider
+					.getApplicationContext().getBean("localMessageProcessInitializer");
+		}
 	}
 
 	@OnOpen
@@ -57,11 +67,20 @@ public class LSClient {
 	@OnMessage
 	public void onMessage(String message, Session session) {
 		LOG.debug("Message recieved : " + message);
-		messageProcessInitializer.process(message, session);
+		localMessageProcessInitializer.process(message, session);
 	}
 
 	@OnClose
 	public void onClose() {
+		LOG.error("Websocket session from cloud is closed.");
+		lsClient = null;
+		this.session = null;
+	}
+	
+	@OnError
+	public void onError(Throwable throwable) {
+		LOG.error("Websocket session from cloud is closed due to some error." + throwable.getMessage());
+		lsClient = null;
 		this.session = null;
 	}
 
@@ -90,6 +109,11 @@ public class LSClient {
 	 *             in case URI is not correct.
 	 */
 	public static LSClient getInstance() throws DeploymentException, IOException, URISyntaxException {
+		createConnection();
+		return lsClient;
+	}
+	
+	public static void createConnection() throws DeploymentException, IOException, URISyntaxException {
 		if (lsClient == null) {
 			// double locking check for singleton object.
 			synchronized (LSClient.class) {
@@ -98,7 +122,6 @@ public class LSClient {
 				}
 			}
 		}
-		return lsClient;
 	}
 
 	public void reTryToConnectToServer() throws DeploymentException, IOException, URISyntaxException {
@@ -108,4 +131,6 @@ public class LSClient {
 	public boolean isSessionOpen() {
 		return (this.session != null && this.session.isOpen());
 	}
+	
+	
 }
