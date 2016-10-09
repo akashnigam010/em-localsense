@@ -50,6 +50,9 @@ public class BillValidator {
 		if (request.getBillId() == null) {
 			throw new BusinessException(BillDetailsErrorCodeType.BILL_ID_CANNOT_BE_EMPTY);
 		}
+		if (request.getItemListOne().isEmpty() || request.getItemListTwo().isEmpty()) {
+			throw new BusinessException(BillDetailsErrorCodeType.NO_ITEMS_FOUND_IN_BILL);
+		}
 	}
 
 	public void validateSettleBillRequest(SettleBillRequest request) throws BusinessException {

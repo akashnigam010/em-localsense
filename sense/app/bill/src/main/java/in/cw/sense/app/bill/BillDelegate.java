@@ -75,13 +75,13 @@ public class BillDelegate {
 		// Check whether a Bill already exist for a given TableId
 		BillEntity billEntity = null;
 		if (billIds == null || billIds.isEmpty()) {
-			bills.add(addOrderItemsAndCalculateBill(consolidateOrderedItems(tableDetails.getOrders()), tableId));
+			bills.add(addOrderItemsAndCalculateBill(consolidateOrderedItems(tableDetails.getOrders()), tableId, null));
 		} else {
 			for (Integer billId : billIds) {
 				BillDto billDto = new BillDto();
 				billEntity = dao.getBillForATable(tableDetails.getId(), billId);
 				if (billEntity == null) {
-					billDto = addOrderItemsAndCalculateBill(consolidateOrderedItems(tableDetails.getOrders()), tableId);
+					billDto = addOrderItemsAndCalculateBill(consolidateOrderedItems(tableDetails.getOrders()), tableId, null);
 				} else if (tableDetails.getIsBillDirty()) {
 					billDto = updateOrderItemsAndCalculateBill(consolidateOrderedItems(tableDetails.getOrders()),
 							billId, tableId);
@@ -94,7 +94,15 @@ public class BillDelegate {
 		return bills;
 	}
 
-	public SearchBillResponse searchBills(SearchBillRequest request) throws BusinessException {
+	
+	/**
+	 * 
+	 * @param request
+	 * @param billStatuses - Filter bills on status
+	 * @return
+	 * @throws BusinessException
+	 */
+	public SearchBillResponse searchBills(SearchBillRequest request, List<String> billStatuses) throws BusinessException {
 		SearchBillResponse response = new SearchBillResponse();
 		response.setOpenTables(tableDelegate.getAllOpenTables());
 		LocalDateTime startDateMidnight = LocalDateTime.of(
@@ -104,7 +112,7 @@ public class BillDelegate {
 				.plusDays(1);
 		Date startDate = Date.from(startDateMidnight.atZone(ZoneId.systemDefault()).toInstant());
 		Date endDate = Date.from(endDateMidnight.atZone(ZoneId.systemDefault()).toInstant());
-		response.setSettledBills(dao.getSettledBills(startDate, endDate));
+		response.setSettledBills(dao.getSettledBills(startDate, endDate, billStatuses));
 		return response;
 	}
 
@@ -118,7 +126,7 @@ public class BillDelegate {
 		List<OrderUnit> orderListOne = tableDelegate.mapOrderItemsToOrderUnitEntity(request.getItemListOne());
 		BillDto billOne = updateOrderItemsAndCalculateBill(orderListOne, request.getBillId(), tableId);
 		List<OrderUnit> orderListTwo = tableDelegate.mapOrderItemsToOrderUnitEntity(request.getItemListTwo());
-		BillDto billTwo = addOrderItemsAndCalculateBill(orderListTwo, tableId);
+		BillDto billTwo = addOrderItemsAndCalculateBill(orderListTwo, tableId, billOne);
 		updateAssociatedKotDetails(billOne.getId(), billTwo.getId());
 		response.setBillOne(billOne);
 		response.setBillTwo(billTwo);
@@ -209,9 +217,10 @@ public class BillDelegate {
 		pdfGenerator.generatePDF(rawBill);
 	}
 	
-	private BillDto addOrderItemsAndCalculateBill(List<OrderUnit> orders, Integer tableId) throws BusinessException {
+	private BillDto addOrderItemsAndCalculateBill(List<OrderUnit> orders, Integer tableId, BillDto originalBill) 
+			throws BusinessException {
 		BillDto billDto = new BillDto();
-		BillEntity billEntity = dao.addOrderItemsToBill(orders, tableId);
+		BillEntity billEntity = dao.addOrderItemsToBill(orders, tableId, originalBill);
 		calculateTaxesOnBill(billEntity);
 		mapper.mapBillEntityToDto(billEntity, billDto);
 		// commented this as table is closed at the time of bill settlement

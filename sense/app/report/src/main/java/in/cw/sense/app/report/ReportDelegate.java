@@ -17,6 +17,7 @@ import cwf.helper.exception.BusinessException;
 import in.cw.sense.api.bo.bill.dto.BillDto;
 import in.cw.sense.api.bo.bill.request.SearchBillRequest;
 import in.cw.sense.api.bo.bill.response.SearchBillResponse;
+import in.cw.sense.api.bo.bill.type.BillStatusType;
 import in.cw.sense.api.bo.report.dto.DailySale;
 import in.cw.sense.api.bo.report.response.ReportResponse;
 import in.cw.sense.app.bill.BillDelegate;
@@ -31,7 +32,9 @@ public class ReportDelegate {
 
 	public ReportResponse generateSalesReport(SearchBillRequest request) throws BusinessException, ParseException {
 		ReportResponse response = new ReportResponse();
-		SearchBillResponse billResponse = billDelegate.searchBills(request);
+		List<String> billStatuses = new ArrayList<>();
+		billStatuses.add(BillStatusType.SETTLED.getStatus());
+		SearchBillResponse billResponse = billDelegate.searchBills(request, billStatuses);
 		response.setSales(getDailySalesFromBills(billResponse.getSettledBills()));
 		return response;
 	}

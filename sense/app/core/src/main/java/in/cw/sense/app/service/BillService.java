@@ -1,5 +1,6 @@
 package in.cw.sense.app.service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import in.cw.sense.api.bo.bill.response.BillResponse;
 import in.cw.sense.api.bo.bill.response.SearchBillResponse;
 import in.cw.sense.api.bo.bill.response.SettleBillResponse;
 import in.cw.sense.api.bo.bill.response.SplitBillResponse;
+import in.cw.sense.api.bo.bill.type.BillStatusType;
 import in.cw.sense.api.bo.response.StatusResponse;
 import in.cw.sense.app.bill.BillDelegate;
 import in.cw.sense.app.bill.mapper.BillMapper;
@@ -44,7 +46,10 @@ public class BillService {
 		SearchBillResponse response = new SearchBillResponse();
 		try {
 			validator.validateSearchBillRequest(request);
-			response = delegate.searchBills(request);
+			List<String> billStatuses = new ArrayList<>();
+			billStatuses.add(BillStatusType.SETTLED.getStatus());
+			billStatuses.add(BillStatusType.CANCELLED.getStatus());
+			response = delegate.searchBills(request, billStatuses);
 			return helper.success(response);
 		} catch (BusinessException e) {
 			return helper.failure(response, e);

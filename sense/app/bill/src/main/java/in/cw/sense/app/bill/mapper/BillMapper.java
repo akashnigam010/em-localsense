@@ -3,6 +3,7 @@ package in.cw.sense.app.bill.mapper;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,12 +32,24 @@ public class BillMapper {
 	@Autowired CwfClock clock;
 	@Autowired JwtTokenHelper jwtTokenHelper;
 
-	public void mapTableOrderDetailsToBill(TableDto tableDto, BillEntity to) {
+	public void mapTableOrderDetailsToBill(TableDto tableDto, BillEntity to, BillDto originalBill) {
 		to.setPersonName(jwtTokenHelper.getUserName());
 		to.setTableId(tableDto.getId());
 		to.setCovers(tableDto.getCovers());
 		to.setTableNumber(tableDto.getTableNumber());
-		if (to.getCreatedDateTime() == null) {
+		
+		if (originalBill != null) {
+			// split bill - creating second bill from bill one info
+			to.setStatus(originalBill.getStatus());
+			to.setSettledDateTime(originalBill.getSettledDateTime());
+			to.setSettledDateTimeToDisplay(to.getSettledDateTime().toString());
+			to.setPaymentMode(originalBill.getPaymentMode());
+			if (StringUtils.isNotEmpty(originalBill.getReasonForCancel())) {
+				to.setReasonForCancel(originalBill.getReasonForCancel());
+			}			
+			to.setCreatedDateTime(originalBill.getCreatedDateTime());
+			to.setCreatedDateTimeToDisplay(to.getCreatedDateTime().toString());
+		} else if (to.getCreatedDateTime() == null) {
 			to.setCreatedDateTime(clock.cal().getTime());
 			to.setCreatedDateTimeToDisplay(to.getCreatedDateTime().toString());
 		}

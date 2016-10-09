@@ -57,10 +57,7 @@ public class BillDao {
 		}
 	}
 
-	public List<BillDto> getSettledBills(Date startDate, Date endDate) throws BusinessException {
-		List<String> billStatuses = new ArrayList<>();
-		billStatuses.add(BillStatusType.SETTLED.getStatus());
-		billStatuses.add(BillStatusType.CANCELLED.getStatus());
+	public List<BillDto> getSettledBills(Date startDate, Date endDate, List<String> billStatuses) throws BusinessException {
 		try {
 			Query findQuery = Query.query(Criteria.where(BILL_STATUS).in(billStatuses))
 					.addCriteria(Criteria.where("createdDateTime").gte(startDate).lt(endDate));
@@ -72,12 +69,20 @@ public class BillDao {
 		}
 	}
 
-	public BillEntity addOrderItemsToBill(List<OrderUnit> orders, Integer tableId) throws BusinessException {
+	/**
+	 * Adds order items to bill.<br>
+	 * @param orders
+	 * @param tableId
+	 * @param originalBill - Pass this while creating split bill from original bill, else pass null
+	 * @return
+	 * @throws BusinessException
+	 */
+	public BillEntity addOrderItemsToBill(List<OrderUnit> orders, Integer tableId, BillDto originalBill) throws BusinessException {
 		int billId = sequenceDao.getNextSequenceId(BILL_SEQ);
 		BillEntity bill = new BillEntity();
 		bill.setId(billId);
 		bill.setOrders(orders);
-		mapper.mapTableOrderDetailsToBill(tablesDao.getTableInformation(tableId), bill);
+		mapper.mapTableOrderDetailsToBill(tablesDao.getTableInformation(tableId), bill, originalBill);
 		senseMongoTemplate.save(bill);
 		return bill;
 	}
@@ -89,7 +94,7 @@ public class BillDao {
 			throw new BusinessException(BillDetailsErrorCodeType.BILL_DETAILS_NOT_FOUND);
 		}
 		bill.setOrders(orders);
-		mapper.mapTableOrderDetailsToBill(tablesDao.getTableInformation(tableId), bill);
+		mapper.mapTableOrderDetailsToBill(tablesDao.getTableInformation(tableId), bill, null);
 		senseMongoTemplate.save(bill);
 		return bill;
 	}
