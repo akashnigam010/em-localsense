@@ -8,6 +8,7 @@ import javax.websocket.ClientEndpoint;
 import javax.websocket.ContainerProvider;
 import javax.websocket.DeploymentException;
 import javax.websocket.OnClose;
+import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
@@ -71,6 +72,15 @@ public class LSClient {
 
 	@OnClose
 	public void onClose() {
+		LOG.error("Websocket session from cloud is closed.");
+		lsClient = null;
+		this.session = null;
+	}
+	
+	@OnError
+	public void onError(Throwable throwable) {
+		LOG.error("Websocket session from cloud is closed due to some error." + throwable.getMessage());
+		lsClient = null;
 		this.session = null;
 	}
 
@@ -99,6 +109,11 @@ public class LSClient {
 	 *             in case URI is not correct.
 	 */
 	public static LSClient getInstance() throws DeploymentException, IOException, URISyntaxException {
+		createConnection();
+		return lsClient;
+	}
+	
+	public static void createConnection() throws DeploymentException, IOException, URISyntaxException {
 		if (lsClient == null) {
 			// double locking check for singleton object.
 			synchronized (LSClient.class) {
@@ -107,7 +122,6 @@ public class LSClient {
 				}
 			}
 		}
-		return lsClient;
 	}
 
 	public void reTryToConnectToServer() throws DeploymentException, IOException, URISyntaxException {
@@ -117,4 +131,6 @@ public class LSClient {
 	public boolean isSessionOpen() {
 		return (this.session != null && this.session.isOpen());
 	}
+	
+	
 }
