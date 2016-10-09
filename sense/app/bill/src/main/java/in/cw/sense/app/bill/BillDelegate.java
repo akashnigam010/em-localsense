@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -112,7 +113,9 @@ public class BillDelegate {
 				.plusDays(1);
 		Date startDate = Date.from(startDateMidnight.atZone(ZoneId.systemDefault()).toInstant());
 		Date endDate = Date.from(endDateMidnight.atZone(ZoneId.systemDefault()).toInstant());
-		response.setSettledBills(dao.getSettledBills(startDate, endDate, billStatuses));
+		List<BillDto> billDtos = dao.getSettledBills(startDate, endDate, billStatuses);
+		Collections.sort(billDtos);
+		response.setSettledBills(billDtos);;
 		return response;
 	}
 

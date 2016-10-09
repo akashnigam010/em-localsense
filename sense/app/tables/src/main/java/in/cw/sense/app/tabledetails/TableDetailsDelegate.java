@@ -112,7 +112,7 @@ public class TableDetailsDelegate {
 	}
 	
 	public List<TableDto> getAllOpenTables() throws BusinessException {
-		return dao.getAllOpenTables();
+		return dao.getAllOpenTablesWithOrders();
 	}
 
 	public void openTable(TableIdRequest request) throws BusinessException {

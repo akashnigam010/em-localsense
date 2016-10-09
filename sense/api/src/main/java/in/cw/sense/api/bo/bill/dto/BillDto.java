@@ -10,7 +10,7 @@ import in.cw.sense.api.bo.bill.type.CloudSyncStatusType;
 import in.cw.sense.api.bo.bill.type.PaymentModeType;
 import in.cw.sense.api.bo.table.dto.ItemDto;
 
-public class BillDto implements Serializable {
+public class BillDto implements Serializable, Comparable<BillDto> {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
@@ -183,5 +183,17 @@ public class BillDto implements Serializable {
 
 	public void setCovers(Integer covers) {
 		this.covers = covers;
+	}
+
+	@Override
+	public int compareTo(BillDto o) {
+		// sort in descending order of settledDateTime
+		// if settlement datetime is same, sort on bill id (desc)
+		int result = o.getSettledDateTime().compareTo(this.getSettledDateTime());
+		if (result == 0) {
+			return o.getId().compareTo(this.getId());
+		} else {
+			return result;
+		}
 	}
 }

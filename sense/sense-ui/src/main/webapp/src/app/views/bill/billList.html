@@ -50,15 +50,31 @@
                 </div>
             </div>
         </form>        
+        <md-card flex md-whiteframe="1" style="max-height:60px;">
+            <md-card-content layout="row" layout-align="center center">
+                <div flex="15" layout="row" layout-fill>
+                    <p>Bill #</p>
+                </div>
+                <div flex="25">
+                    <p>Table #</p>
+                </div>
+                <div flex="30">
+                    <p>Status</p>
+                </div>
+                <div flex="30">
+                    <p>Bill Amount</p>
+                </div>
+            </md-card-content>
+        </md-card>
         <md-card flex md-whiteframe="1" style="max-height:60px;" class="cursorPointer" ng-repeat="table in openTables" ng-click="goToBill(table, false)">
             <md-card-content layout="row" layout-align="center center">
-                <div flex="20" layout="row" layout-fill>
-                    <p>{{table.id}}</p>
+                <div flex="15" layout="row" layout-fill>
+                    <p></p>
                 </div>
                 <div flex="25">
                     <p>{{table.tableNumber}}</p>
                 </div>
-                <div flex="25">
+                <div flex="30">
                     <p style="color: red;">PENDING</p>
                 </div>
                 <div flex="30"></div>
@@ -66,13 +82,13 @@
         </md-card>
         <md-card flex md-whiteframe="1" style="max-height:60px;" class="cursorPointer" ng-repeat="bill in bills" ng-click="goToBill(bill, true)">
             <md-card-content layout="row" layout-align="center center">
-                <div flex="20" layout="row" layout-fill>
+                <div flex="15" layout="row" layout-fill>
                     <p>{{bill.id}}</p>
                 </div>
                 <div flex="25">
                     <p>{{bill.tableNumber}}</p>
                 </div>
-                <div flex="25">
+                <div flex="30">
                     <p ng-style="bill.status == 'SETTLED'?{'color': 'green'}:{'color': 'red'}">{{bill.status}}</p>
                 </div>
                 <div flex="30">

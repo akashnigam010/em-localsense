@@ -49,6 +49,7 @@ public class TablesDetailsDao {
 	private static final String ORDER_SEQ = "order_seq";
 	private static final String ID = "_id";
 	private static final String STATUS = "status";
+	private static final String ORDERS = "orders.length";
 	
 	public void setSenseMongoTemplate(MongoTemplate senseMongoTemplate) {
 		this.senseMongoTemplate = senseMongoTemplate;
@@ -310,9 +311,11 @@ public class TablesDetailsDao {
 		}
 	}
 
-	public List<TableDto> getAllOpenTables() throws BusinessException {
+	public List<TableDto> getAllOpenTablesWithOrders() throws BusinessException {
 		try {
 			Query findQuery = Query.query(Criteria.where(STATUS).is(TableStatusType.OCCUPIED.getStatus()));
+			// TODO : Add criteria for filtering tables where there is no orders.
+			//addCriteria(Criteria.where(ORDERS).gt(1));
 			List<Table> entities = senseMongoTemplate.find(findQuery, Table.class);
 			return mapper.map(entities);
 		} catch (Exception e) {
