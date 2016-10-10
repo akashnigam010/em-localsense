@@ -18,7 +18,6 @@ import in.cw.sense.api.bo.personnel.response.MessageCountResponse;
 import in.cw.sense.api.bo.personnel.response.UserSignOnResponse;
 import in.cw.sense.app.login.LoginDelegate;
 import in.cw.sense.app.service.validation.LoginValidator;
-import in.cw.sense.app.services.BillSynchService;
 import in.cw.sense.app.services.CloudConnectService;
 
 @RestController
