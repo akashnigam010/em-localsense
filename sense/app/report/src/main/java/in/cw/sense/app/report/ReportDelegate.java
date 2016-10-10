@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,6 +63,7 @@ public class ReportDelegate {
 			saleDto.setTotalSales(findTotalOfAllBills(e.getValue()));
 			sales.add(saleDto);
 		}
+		Collections.sort(sales);
 		return sales;
 	}
 

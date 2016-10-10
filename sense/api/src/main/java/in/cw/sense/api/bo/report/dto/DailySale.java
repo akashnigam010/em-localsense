@@ -3,7 +3,7 @@ package in.cw.sense.api.bo.report.dto;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class DailySale {
+public class DailySale implements Comparable<DailySale> {
 	private Date date;
 	private String dateString;
 	private BigDecimal totalSales;
@@ -30,5 +30,10 @@ public class DailySale {
 
 	public void setTotalSales(BigDecimal totalSales) {
 		this.totalSales = totalSales;
+	}
+
+	@Override
+	public int compareTo(DailySale o) {
+		return this.date.compareTo(o.date);
 	}
 }
