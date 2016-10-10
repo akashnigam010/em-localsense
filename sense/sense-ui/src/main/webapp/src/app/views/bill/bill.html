@@ -1,6 +1,36 @@
 <div ng-init="getBillInformation()">
     <md-content layout="column" layout-padding>
         <div ng-repeat="bill in bills track by $index">
+            <div flex layout="row" layout-align="center start" ng-if="bill.status == 'CANCELLED'">
+                <div layout="row" layout-align="space-between center">
+                    <div layout="row" layout-align="center center">
+                        <div style="color: red">
+                            <p>CANCELLED : <span>{{bill.reasonForCancel}}</span></p>                            
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </div>
+            <div flex layout="row" layout-align="center start" ng-if="bill.status == 'SETTLED'">
+                <div layout="row" layout-align="space-between center">
+                    <div layout="row" layout-align="center center">
+                        <div style="color: green">
+                            <p>SETTLED</p>                            
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </div>
+            <div flex layout="row" layout-align="center start" ng-if="bill.status == 'UNSETTLED'">
+                <div layout="row" layout-align="space-between center">
+                    <div layout="row" layout-align="center center">
+                        <div style="color: red">
+                            <p>PENDING SETTLEMENT</p>                            
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </div>
             <div flex layout="row" layout-align="center start">
                 <div layout="row" md-whiteframe="6" layout-align="space-between center" class="custom-card sense-bold" ng-class="setTileWidth(bill)">
                     <div flex layout="row" layout-align="center center">
