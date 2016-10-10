@@ -41,15 +41,30 @@ public class BillService {
 	@Autowired
 	BillValidator validator;
 
-	@RequestMapping(value = "/searchBills", method = RequestMethod.POST, headers = "Accept=application/json")
-	public SearchBillResponse searchBills(@RequestBody SearchBillRequest request) {
+	@RequestMapping(value = "/searchBillsByDate", method = RequestMethod.POST, headers = "Accept=application/json")
+	public SearchBillResponse searchBillsByDate(@RequestBody SearchBillRequest request) {
 		SearchBillResponse response = new SearchBillResponse();
 		try {
-			validator.validateSearchBillRequest(request);
+			validator.validateSearchBillByDateRequest(request);
 			List<String> billStatuses = new ArrayList<>();
 			billStatuses.add(BillStatusType.SETTLED.getStatus());
 			billStatuses.add(BillStatusType.CANCELLED.getStatus());
 			response = delegate.searchBills(request, billStatuses);
+			return helper.success(response);
+		} catch (BusinessException e) {
+			return helper.failure(response, e);
+		}
+	}
+	
+	@RequestMapping(value = "/searchBillById", method = RequestMethod.POST, headers = "Accept=application/json")
+	public SearchBillResponse searchBillById(@RequestBody SearchBillRequest request) {
+		SearchBillResponse response = new SearchBillResponse();
+		try {
+			validator.validateSearchBillByIdRequest(request);
+			List<String> billStatuses = new ArrayList<>();
+			billStatuses.add(BillStatusType.SETTLED.getStatus());
+			billStatuses.add(BillStatusType.CANCELLED.getStatus());
+			response = delegate.searchBillById(request, billStatuses);
 			return helper.success(response);
 		} catch (BusinessException e) {
 			return helper.failure(response, e);

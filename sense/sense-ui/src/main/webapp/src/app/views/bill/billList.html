@@ -1,4 +1,4 @@
-<div ng-init="getBills(startDate, startDate)">
+<div ng-init="getBills()">
     <md-content layout="column" layout-padding>
         <form name="billSearchForm">
             <div class="panel" flex>
@@ -23,6 +23,7 @@
                                     <md-option selected value="1">Today</md-option>
                                     <md-option value="2">Yesterday</md-option>
                                     <md-option value="3">Date Range</md-option>
+                                    <md-option value="4">Bill Number</md-option>
                                 </md-select>
                             </md-input-container>
                             
@@ -37,6 +38,12 @@
                                     <div ng-message="valid">Invalid Date</div>
                                     <div ng-message="required">End date is required</div>
                                 </div>
+                            </div> 
+                            <div flex flex-gt-sm="50" class="md-block" layout="column" layout-gt-sm="row" ng-show="when == 4">
+                                <md-input-container>
+                                    <label>Bill Number</label>
+                                    <input ng-model="billId">
+                                  </md-input-container>
                             </div>                            
                         </div>
                         <div flex layout="row" layout-align-gt-sm="start center" layout-align="center center">

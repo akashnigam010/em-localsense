@@ -5,6 +5,7 @@ import java.util.Calendar;
 public class SearchBillRequest {
 	private Calendar startDate;
 	private Calendar endDate;
+	private Integer id;
 
 	public Calendar getStartDate() {
 		return startDate;
@@ -20,5 +21,13 @@ public class SearchBillRequest {
 
 	public void setEndDate(Calendar endDate) {
 		this.endDate = endDate;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 }

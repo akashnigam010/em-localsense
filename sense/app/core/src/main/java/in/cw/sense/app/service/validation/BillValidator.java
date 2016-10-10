@@ -17,10 +17,17 @@ import in.cw.sense.app.bill.type.BillDetailsErrorCodeType;
 public class BillValidator {
 	private static final Logger LOG = Logger.getLogger(BillValidator.class);
 	
-	public void validateSearchBillRequest(SearchBillRequest request) throws BusinessException {
+	public void validateSearchBillByDateRequest(SearchBillRequest request) throws BusinessException {
 		if (request.getStartDate() == null || request.getEndDate() == null) {
 			LOG.error("Start or End Date is null");
 			throw new BusinessException(BillDetailsErrorCodeType.START_DATE_OR_END_DATE_MISSING);
+		}
+	}
+	
+	public void validateSearchBillByIdRequest(SearchBillRequest request) throws BusinessException {
+		if (request.getId() == null) {
+			LOG.error("Bill Id is null");
+			throw new BusinessException(BillDetailsErrorCodeType.BILL_ID_CANNOT_BE_EMPTY);
 		}
 	}
 	

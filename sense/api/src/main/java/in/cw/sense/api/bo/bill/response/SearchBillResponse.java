@@ -25,6 +25,9 @@ public class SearchBillResponse extends GenericResponse {
 	}
 
 	public List<BillDto> getSettledBills() {
+		if (settledBills == null) {
+			settledBills = new ArrayList<>();
+		}
 		return settledBills;
 	}
 

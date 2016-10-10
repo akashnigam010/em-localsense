@@ -19,7 +19,7 @@ app.factory('Services', ['$http', function($http) {
         barItems: null
     };
 
-    var billSearchDate = {};
+    var billSearchFilterCache = {};
 
 
     return {
@@ -108,12 +108,13 @@ app.factory('Services', ['$http', function($http) {
             data.bill = bill;
         },
 
-        getBillSearchDates: function() {
-            return billSearchDate;
+        getBillSearchFilterCache: function() {
+            return billSearchFilterCache;
         },
-        setBillSearchDates: function(dateOb) {
-            billSearchDate.startDate = dateOb.startDate;
-            billSearchDate.endDate = dateOb.endDate;
+        setBillSearchFilterCache: function(billSearchObj) {
+            billSearchFilterCache.startDate = billSearchObj.startDate;
+            billSearchFilterCache.endDate = billSearchObj.endDate;
+            billSearchFilterCache.billId = billSearchObj.id;
         },
 
 
@@ -205,11 +206,21 @@ app.factory('Services', ['$http', function($http) {
         },
 
         /****** Bills ******/
-        searchBills: function(url, obj, headers) {
+        searchBillsByDate: function(url, obj, headers) {
             return $http({
                 method: 'POST',
                 data: obj,
-                url: url + 'bill/searchBills',
+                url: url + 'bill/searchBillsByDate',
+                headers: headers,
+                async: false
+            });
+        },
+
+        searchBillById: function(url, obj, headers) {
+            return $http({
+                method: 'POST',
+                data: obj,
+                url: url + 'bill/searchBillById',
                 headers: headers,
                 async: false
             });

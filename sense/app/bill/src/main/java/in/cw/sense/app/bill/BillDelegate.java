@@ -94,6 +94,15 @@ public class BillDelegate {
 		}
 		return bills;
 	}
+	
+	public SearchBillResponse searchBillById(SearchBillRequest request, List<String> billStatuses) throws BusinessException {
+		SearchBillResponse response = new SearchBillResponse();
+		BillDto billDto = dao.getBillById(request.getId(), billStatuses);
+		List<BillDto> billDtos = response.getSettledBills();
+		billDtos.add(billDto);
+		response.setSettledBills(billDtos);
+		return response;
+	}
 
 	
 	/**
@@ -113,7 +122,7 @@ public class BillDelegate {
 				.plusDays(1);
 		Date startDate = Date.from(startDateMidnight.atZone(ZoneId.systemDefault()).toInstant());
 		Date endDate = Date.from(endDateMidnight.atZone(ZoneId.systemDefault()).toInstant());
-		List<BillDto> billDtos = dao.getSettledBills(startDate, endDate, billStatuses);
+		List<BillDto> billDtos = dao.getBillsByDate(startDate, endDate, billStatuses);
 		Collections.sort(billDtos);
 		response.setSettledBills(billDtos);;
 		return response;
