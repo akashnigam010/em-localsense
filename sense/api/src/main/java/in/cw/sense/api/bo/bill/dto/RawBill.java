@@ -1,7 +1,6 @@
 package in.cw.sense.api.bo.bill.dto;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import in.cw.sense.api.bo.menu.type.MenuType;
