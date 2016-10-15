@@ -57,6 +57,9 @@ app.controller('OrderSummaryController', ['$scope', '$location', '$rootScope', '
                     $scope.cancelTable = false;
                 }
                 $rootScope.loading = false;
+                if (data.status == 'VACANT') {
+                    $location.path('/dashboard');
+                }
             } else {
                 growl.addErrorMessage(data.statusCodes.statusCode[0].description);
                 $rootScope.loading = false;

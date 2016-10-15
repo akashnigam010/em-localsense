@@ -91,6 +91,7 @@ public class TableDetailsDelegate {
 		List<OrderEntity> orderEntities = tableDetails.getOrders();
 		mapper.mapOrderEntityToResponse(orderEntities, response, tableDetails.getTableNumber());
 		response.setTableId(tableDetails.getId());
+		response.setStatus(tableDetails.getStatus());
 		return response;
 	}
 
