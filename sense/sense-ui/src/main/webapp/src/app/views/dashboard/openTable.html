@@ -18,7 +18,7 @@
                         <md-input-container flex class="md-block">
                             <label>Number of covers</label>
                             <md-icon><ng-md-icon icon="mode_edit"></ng-md-icon></md-icon>                            
-                            <input required name="covers" ng-model="openTableModalObj.covers">
+                            <input type="number" required name="covers" ng-model="openTableModalObj.covers">
                             <div ng-messages="openTableForm.covers.$error">
                                 <div ng-message="required">This is required</div>
                             </div>
