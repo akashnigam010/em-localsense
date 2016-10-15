@@ -1,8 +1,5 @@
 package in.cw.sense.app.bill;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -38,10 +35,12 @@ import in.cw.sense.api.bo.bill.response.SplitBillResponse;
 import in.cw.sense.api.bo.bill.type.BillStatusType;
 import in.cw.sense.api.bo.bill.type.CloudSyncStatusType;
 import in.cw.sense.api.bo.bill.type.PaymentModeType;
+import in.cw.sense.api.bo.kot.dto.KotDto;
 import in.cw.sense.api.bo.kot.entity.Kot;
 import in.cw.sense.api.bo.menu.type.DiscountType;
 import in.cw.sense.api.bo.menu.type.MenuType;
 import in.cw.sense.api.bo.restaurant.response.RestaurantInfoResponse;
+import in.cw.sense.api.bo.table.dto.OrderDto;
 import in.cw.sense.api.bo.table.entity.Table;
 import in.cw.sense.api.bo.tax.entity.TaxDetailsEntity;
 import in.cw.sense.app.bill.mapper.BillMapper;
@@ -124,7 +123,7 @@ public class BillDelegate {
 		Date endDate = Date.from(endDateMidnight.atZone(ZoneId.systemDefault()).toInstant());
 		List<BillDto> billDtos = dao.getBillsByDate(startDate, endDate, billStatuses);
 		Collections.sort(billDtos);
-		response.setSettledBills(billDtos);;
+		response.setSettledBills(billDtos);
 		return response;
 	}
 
@@ -146,13 +145,12 @@ public class BillDelegate {
 	}
 
 	private void updateAssociatedKotDetails(Integer billIdOne, Integer billIdTwo) throws BusinessException {
-		List<Kot> kots = dao.getAssociatedKotDetails(billIdOne);
+		List<KotDto> kots = dao.getAssociatedKotDetails(billIdOne);
 		if (kots == null || kots.isEmpty()) {
 			throw new BusinessException(BillDetailsErrorCodeType.ASSOCIATED_KOT_NOT_FOUND);
 		}
-		for (Kot kot : kots) {
-			kot.getBillIds().add(billIdTwo);
-			dao.saveKot(kot);
+		for (KotDto kot : kots) {
+			dao.updateKot(kot.getId(), billIdTwo);
 		}
 	}
 
@@ -211,15 +209,17 @@ public class BillDelegate {
 		return dto;
 	}
 
-	public void emailBill(BillIdRequest request) throws BusinessException {
+	/**
+	 * @param request  
+	 */
+	public void emailBill(BillIdRequest request) {
 //		RestaurantInfoResponse restaurantInfo = restaurantInfoDelegate.getRestaurantInformation();
 //		BillEntity bill = dao.getBill(request.getBillId());
 //		BillDto billDto = new BillDto();
 //		mapper.mapBillEntityToDto(bill, billDto);
 //		RawBill rawBill = new RawBill(restaurantInfo.getRestaurantInfo(), billDto);
-		
 	}
-	
+
 	public void printBill(BillIdRequest request) throws BusinessException {
 		RestaurantInfoResponse restaurantInfo = restaurantInfoDelegate.getRestaurantInformation();
 		BillEntity bill = dao.getBill(request.getBillId());
@@ -228,7 +228,7 @@ public class BillDelegate {
 		RawBill rawBill = new RawBill(restaurantInfo.getRestaurantInfo(), billDto);
 		pdfGenerator.generatePDF(rawBill);
 	}
-	
+
 	private BillDto addOrderItemsAndCalculateBill(List<OrderUnit> orders, Integer tableId, BillDto originalBill) 
 			throws BusinessException {
 		BillDto billDto = new BillDto();
@@ -236,7 +236,7 @@ public class BillDelegate {
 		calculateTaxesOnBill(billEntity);
 		mapper.mapBillEntityToDto(billEntity, billDto);
 		// commented this as table is closed at the time of bill settlement
-		// updateTableWithBillDetails(tableId, billEntity.getId(), Boolean.FALSE);
+		updateTableWithBillDetails(tableId, billEntity.getId(), Boolean.FALSE);
 		return billDto;
 	}
 
@@ -247,7 +247,7 @@ public class BillDelegate {
 		calculateTaxesOnBill(billEntity);
 		mapper.mapBillEntityToDto(billEntity, billDto);
 		// commented this as table is closed at the time of bill settlement
-		// updateTableWithBillDetails(tableId, billId, Boolean.FALSE);
+		updateTableWithBillDetails(tableId, billId, Boolean.FALSE);
 		return billDto;
 	}
 
@@ -364,5 +364,14 @@ public class BillDelegate {
 
 	private void closeTableAndBackUpKotDetails(Integer tableId, Integer billId) throws BusinessException {
 		tableDelegate.closeTable(tableId, billId);
+	}
+
+	public List<OrderDto> getAssociatedKots(BillIdRequest request) {
+		List<KotDto> associatedKots = dao.getAssociatedKotDetails(request.getBillId());
+		List<OrderDto> orderDtos = new ArrayList<>();
+		for (KotDto dto : associatedKots) {
+			orderDtos.add(dto.getOrder());
+		}
+		return orderDtos;
 	}
 }

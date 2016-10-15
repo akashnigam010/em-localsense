@@ -20,11 +20,15 @@ import in.cw.sense.api.bo.bill.entity.BillEntity;
 import in.cw.sense.api.bo.bill.entity.ChargeEntity;
 import in.cw.sense.api.bo.bill.entity.DiscountEntity;
 import in.cw.sense.api.bo.bill.entity.ItemCountEntity;
+import in.cw.sense.api.bo.bill.entity.OrderEntity;
 import in.cw.sense.api.bo.bill.entity.OrderUnit;
 import in.cw.sense.api.bo.bill.entity.RateValueEntity;
 import in.cw.sense.api.bo.bill.entity.TotalEntity;
 import in.cw.sense.api.bo.bill.entity.TypeValueEntity;
+import in.cw.sense.api.bo.kot.dto.KotDto;
+import in.cw.sense.api.bo.kot.entity.Kot;
 import in.cw.sense.api.bo.table.dto.ItemDto;
+import in.cw.sense.api.bo.table.dto.OrderDto;
 import in.cw.sense.api.bo.table.dto.TableDto;
 
 @Component
@@ -139,14 +143,6 @@ public class BillMapper {
 		return value;
 	}
 
-	/*
-	 * private List<Order> mapOrderEntityToDto(List<OrderEntity> orderEntities)
-	 * { List<Order> orders = new ArrayList<>(); for (OrderEntity entity :
-	 * orderEntities) { Order order = new Order();
-	 * order.setItems(mapOrderEntityItemsToDto(entity.getOrderUnits()));
-	 * order.setId(entity.getId()); orders.add(order); } return orders; }
-	 */
-
 	private List<ItemDto> mapOrderEntityItemsToDto(List<OrderUnit> orderUnits) {
 		List<ItemDto> items = new ArrayList<>();
 		for (OrderUnit unit : orderUnits) {
@@ -170,5 +166,20 @@ public class BillMapper {
 			total.setLiquor(totalEntity.getLiquor());
 		}
 		return total;
+	}
+
+	public void map(Kot kot, KotDto dto) {
+		dto.setBillIds(kot.getBillIds());
+		dto.setId(kot.getId());
+		dto.setTableNumber(kot.getTableNumber());
+		dto.setOrder(mapOrderEntityToDto(kot.getOrder()));
+	}
+	
+	
+	private OrderDto mapOrderEntityToDto(OrderEntity orderEntities) {
+		OrderDto order = new OrderDto();
+		order.setItems(mapOrderEntityItemsToDto(orderEntities.getOrderUnits()));
+		order.setId(orderEntities.getId());
+		return order;
 	}
 }

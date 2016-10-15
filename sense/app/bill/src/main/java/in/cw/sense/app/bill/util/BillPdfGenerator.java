@@ -72,12 +72,11 @@ public class BillPdfGenerator {
 			InputStream is = BillPdfGenerator.class.getClassLoader().getResourceAsStream("master.jrxml");
 			jasperHeaderReport = JasperCompileManager.compileReport(is);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperHeaderReport, parameters, beanColDataSource);
-			JasperExportManager.exportReportToPdfFile(jasperPrint, "/Users/aknigam/Documents/Work/" + bill.getBill().getId() + ".pdf");
+			JasperExportManager.exportReportToPdfFile(jasperPrint, "/Users/" + bill.getBill().getId() + ".pdf");
 			return Boolean.TRUE;
 		} catch (JRException e) {
 			e.printStackTrace();
 			return Boolean.FALSE;
 		}
-
 	}
 }

@@ -24,6 +24,7 @@ import in.cw.sense.api.bo.bill.response.SearchBillResponse;
 import in.cw.sense.api.bo.bill.response.SettleBillResponse;
 import in.cw.sense.api.bo.bill.response.SplitBillResponse;
 import in.cw.sense.api.bo.bill.type.BillStatusType;
+import in.cw.sense.api.bo.kot.response.AssociatedKotResponse;
 import in.cw.sense.api.bo.response.StatusResponse;
 import in.cw.sense.app.bill.BillDelegate;
 import in.cw.sense.app.bill.mapper.BillMapper;
@@ -166,6 +167,18 @@ public class BillService {
 		try {
 			validator.validateBillIdRequest(request);
 			delegate.emailBill(request);
+			return helper.success(response);
+		} catch (BusinessException e) {
+			return helper.failure(response, e);
+		}
+	}
+	
+	@RequestMapping(value = "/getAssociatedKots", method = RequestMethod.POST, headers = "Accept=application/json")
+	public AssociatedKotResponse getAssociatedKot(@RequestBody BillIdRequest request) {
+		AssociatedKotResponse response = new AssociatedKotResponse();
+		try {
+			validator.validateBillIdRequest(request);
+			response.setAssociatedKots(delegate.getAssociatedKots(request));
 			return helper.success(response);
 		} catch (BusinessException e) {
 			return helper.failure(response, e);

@@ -1,5 +1,6 @@
 package in.cw.sense.app.bill;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,12 +13,12 @@ import org.springframework.stereotype.Repository;
 
 import cwf.dbhelper.sequencegenerator.SequenceDao;
 import cwf.helper.exception.BusinessException;
-import cwf.helper.type.GenericErrorCodeType;
 import in.cw.sense.api.bo.bill.dto.BillDto;
 import in.cw.sense.api.bo.bill.entity.BillEntity;
 import in.cw.sense.api.bo.bill.entity.OrderUnit;
 import in.cw.sense.api.bo.bill.type.BillStatusType;
 import in.cw.sense.api.bo.bill.type.CloudSyncStatusType;
+import in.cw.sense.api.bo.kot.dto.KotDto;
 import in.cw.sense.api.bo.kot.entity.Kot;
 import in.cw.sense.app.bill.mapper.BillMapper;
 import in.cw.sense.app.bill.type.BillDetailsErrorCodeType;
@@ -40,6 +41,7 @@ public class BillDao {
 	private static final String BILL_SEQ = "bill_seq";
 	private static final String BILL_STATUS = "status";
 	private static final String SYNC_STATUS = "syncStatus";
+	private static final String BILL_IDS = "billIds";
 
 	public void setSenseMongoTemplate(MongoTemplate senseMongoTemplate) {
 		this.senseMongoTemplate = senseMongoTemplate;
@@ -101,12 +103,26 @@ public class BillDao {
 		return senseMongoTemplate.findById(id, BillEntity.class);
 	}
 
-	public List<Kot> getAssociatedKotDetails(Integer billId) {
+	public List<KotDto> getAssociatedKotDetails(Integer billId) {
+		List<KotDto> kotDtos = new ArrayList<>();
 		Query findQuery = Query.query(Criteria.where("billIds").in(billId));
-		return senseMongoTemplate.find(findQuery, Kot.class);
+		List<Kot> kots = senseMongoTemplate.find(findQuery, Kot.class);
+		if (kots != null) {
+			for (Kot kot : kots) {
+				KotDto dto = new KotDto();
+				mapper.map(kot, dto);
+				kotDtos.add(dto);
+			}
+		}
+		return kotDtos;
 	}
 
-	public void saveKot(Kot kot) {
+	/*
+	 * Here billId parameter will be updated in list of billIds
+	 */
+	public void updateKot(Integer kotId, Integer billId) {
+		Kot kot = senseMongoTemplate.findById(kotId, Kot.class);
+		kot.getBillIds().add(billId);
 		senseMongoTemplate.save(kot);
 	}
 
