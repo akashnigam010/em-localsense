@@ -83,7 +83,7 @@ app.controller('RestaurantInfoController', ['$scope', '$location', 'Services', '
                     $mdDialog.hide(answer);
                 };
             }],
-            templateUrl: 'app/views/restaurantinfo/editRestaurantInfo.html',
+            templateUrl: 'app/views/restaurantInfo/editRestaurantInfo.html',
             parent: angular.element(document.body),
             targetEvent: ev,
             clickOutsideToClose: false,
