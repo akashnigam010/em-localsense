@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cwf.helper.ResponseHelper;
 import cwf.helper.exception.BusinessException;
+import cwf.helper.print.TestMain;
 import in.cw.sense.api.bo.bill.dto.BillDto;
 import in.cw.sense.api.bo.bill.request.BillIdRequest;
 import in.cw.sense.api.bo.bill.request.DiscountRequest;
@@ -41,6 +42,8 @@ public class BillService {
 	BillMapper mapper;
 	@Autowired
 	BillValidator validator;
+	@Autowired
+	TestMain testMain;
 
 	@RequestMapping(value = "/searchBillsByDate", method = RequestMethod.POST, headers = "Accept=application/json")
 	public SearchBillResponse searchBillsByDate(@RequestBody SearchBillRequest request) {
@@ -154,7 +157,8 @@ public class BillService {
 		StatusResponse response = new StatusResponse();
 		try {
 			validator.validateBillIdRequest(request);
-			delegate.printBill(request);
+			//delegate.printBill(request);
+			testMain.print();
 			return helper.success(response);
 		} catch (BusinessException e) {
 			return helper.failure(response, e);
