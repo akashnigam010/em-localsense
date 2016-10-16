@@ -1,6 +1,6 @@
 {
     "sense": {
-        "hosturl":"http://localhost:8087/sense/",
+        "hosturl":"/sense/",
         "appname":"sense",
         "version":"v 1.0 (beta)",
         "browserinfo": {

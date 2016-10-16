@@ -54,6 +54,7 @@ public class BillEmailCreator {
 
 	public String getBillEmailBody(RawBill rawBill) throws BusinessException {
 		emailTemplateMap = emailTemplateDao.getBillEmailTemplates();
+		//TODO : Get email template  map from files and not db
 		String parentHtml = emailTemplateMap.get(EmailTemplateType.PARENT).getValue();
 		parentHtml = replaceParams(parentHtml, IMAGE_SERVER, IMAGE_SERVER_VALUE);
 		parentHtml = replaceParams(parentHtml, RESTAURANT_NAME, rawBill.getRestaurantInfo().getName());
