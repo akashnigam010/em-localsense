@@ -36,7 +36,6 @@ import in.cw.sense.api.bo.bill.type.BillStatusType;
 import in.cw.sense.api.bo.bill.type.CloudSyncStatusType;
 import in.cw.sense.api.bo.bill.type.PaymentModeType;
 import in.cw.sense.api.bo.kot.dto.KotDto;
-import in.cw.sense.api.bo.kot.entity.Kot;
 import in.cw.sense.api.bo.menu.type.DiscountType;
 import in.cw.sense.api.bo.menu.type.MenuType;
 import in.cw.sense.api.bo.restaurant.response.RestaurantInfoResponse;
