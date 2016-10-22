@@ -43,6 +43,7 @@ import in.cw.sense.api.bo.table.dto.OrderDto;
 import in.cw.sense.api.bo.table.entity.Table;
 import in.cw.sense.api.bo.tax.entity.TaxDetailsEntity;
 import in.cw.sense.app.bill.mapper.BillMapper;
+import in.cw.sense.app.bill.print.LowLevelBillPrinter;
 import in.cw.sense.app.bill.type.BillDetailsErrorCodeType;
 import in.cw.sense.app.bill.util.BillEmailCreator;
 import in.cw.sense.app.bill.util.BillPdfGenerator;
@@ -64,6 +65,7 @@ public class BillDelegate {
 	@Autowired RestaurantInfoDelegate restaurantInfoDelegate;
 	@Autowired BillEmailCreator emailCreator;
 	@Autowired BillPdfGenerator pdfGenerator;
+	@Autowired LowLevelBillPrinter printer;
 
 	public List<BillDto> goToBill(Integer tableId) throws BusinessException {
 		List<BillDto> bills = new ArrayList<>();
@@ -220,14 +222,24 @@ public class BillDelegate {
 	}
 
 	public void printBill(BillIdRequest request) throws BusinessException {
-		RestaurantInfoResponse restaurantInfo = restaurantInfoDelegate.getRestaurantInformation();
-		BillEntity bill = dao.getBill(request.getBillId());
-		BillDto billDto = new BillDto();
-		mapper.mapBillEntityToDto(bill, billDto);
-		RawBill rawBill = new RawBill(restaurantInfo.getRestaurantInfo(), billDto);
+		RawBill rawBill = createRawBill(request.getBillId());
 		pdfGenerator.generatePDF(rawBill);
 	}
-
+	
+	//This method prints bill on printer
+	public void printBillonPrinter(BillIdRequest request) throws BusinessException {
+		RawBill rawBill = createRawBill(request.getBillId());
+		printer.actualPrint(rawBill);
+	}
+	
+	private RawBill createRawBill(Integer billId) throws BusinessException {
+		RestaurantInfoResponse restaurantInfo = restaurantInfoDelegate.getRestaurantInformation();
+		BillEntity bill = dao.getBill(billId);
+		BillDto billDto = new BillDto();
+		mapper.mapBillEntityToDto(bill, billDto);
+		return new RawBill(restaurantInfo.getRestaurantInfo(), billDto);
+	}
+	
 	private BillDto addOrderItemsAndCalculateBill(List<OrderUnit> orders, Integer tableId, BillDto originalBill) 
 			throws BusinessException {
 		BillDto billDto = new BillDto();
