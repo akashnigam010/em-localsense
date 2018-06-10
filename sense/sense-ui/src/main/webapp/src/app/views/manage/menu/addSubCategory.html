@@ -1,0 +1,35 @@
+<md-dialog aria-label="Add Sub Category" ng-cloak style="width: 50%;">
+  <form name="addSubCategoryForm" novalidate autocomplete="off">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>{{addEditSubCategoryModalObj.heading}}</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon aria-label="Close dialog">
+            <i class="fa fa-times"></i>
+          </md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <div layout="row" layout-wrap layout-align="space-between center">
+          <div flex>
+            <md-input-container flex class="md-block">
+                <label>Sub Category Name</label>
+                <md-icon><i class="fa fa-pencil-square-o" aria-hidden="true"></i></md-icon>
+                <input required name="subCategoryName" ng-model="addEditSubCategoryModalObj.name">
+                <div ng-messages="addSubCategoryForm.subCategoryName.$error">
+                  <div ng-message="required">This is required.</div>
+                </div>
+              </md-input-container>
+          </div>         
+        </div>
+      </div>           
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-align="center center">
+      <md-button type="submit" ng-click="addSubCategoryForm.$valid && answer(true)">Save</md-button>
+      <md-button ng-click="answer(false)">Cancel</md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

@@ -1,0 +1,119 @@
+<md-dialog aria-label="Edit Restaurant Info" ng-cloak style="width: 50%;">
+    <form name="restaurantInfoForm" novalidate autocomplete="off">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Edit Restaurant Information</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon aria-label="Close dialog">
+                        <i class="fa fa-times"></i>
+                    </md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <div layout="row">
+                    <div flex layout="column" layout-wrap layout-align="center stretch">
+                        <md-subheader>Details</md-subheader>
+                        <md-input-container class="md-block">
+                            <label>Restaurant Name</label>
+                            <md-icon><ng-md-icon icon="mode_edit"></ng-md-icon></md-icon>                            
+                            <input required name="name" ng-model="restaurantInfoModalObj.name">
+                            <div ng-messages="restaurantInfoForm.name.$error">
+                                <div ng-message="required">This is required</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Tagline</label>
+                            <md-icon><ng-md-icon icon="filter_vintage"></ng-md-icon></md-icon>                            
+                            <input name="tagline" ng-model="restaurantInfoModalObj.tagline">
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Bar</label>
+                            <md-icon><ng-md-icon icon="local_bar"></ng-md-icon></md-icon>                            
+                            <md-select required name="barInfo" ng-model="restaurantInfoModalObj.barInfo">
+                                <md-option value="1">Not Available</md-option>
+                                <md-option value="2">Available</md-option>
+                            </md-select>
+                            <div ng-messages="restaurantInfoForm.barInfo.$error">
+                                <div ng-message="required">This is required</div>
+                            </div>
+                        </md-input-container>
+                        <md-subheader>Address</md-subheader>
+                        <md-input-container class="md-block">
+                            <label>Address Line 1</label>
+                            <md-icon><ng-md-icon icon="place"></ng-md-icon></md-icon>                            
+                            <input required name="addressLine1" ng-model="restaurantInfoModalObj.addressLine1">
+                            <div ng-messages="restaurantInfoForm.addressLine1.$error">
+                                <div ng-message="required">This is required</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Address Line 2</label>
+                            <md-icon><ng-md-icon icon="place"></ng-md-icon></md-icon>                            
+                            <input required name="addressLine2" ng-model="restaurantInfoModalObj.addressLine2">
+                            <div ng-messages="restaurantInfoForm.addressLine2.$error">
+                                <div ng-message="required">This is required</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>City</label>
+                            <md-icon><ng-md-icon icon="location_city"></ng-md-icon></md-icon>                            
+                            <input required name="city" ng-model="restaurantInfoModalObj.city">
+                            <div ng-messages="restaurantInfoForm.city.$error">
+                                <div ng-message="required">This is required</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Pincode</label>
+                            <md-icon><ng-md-icon icon="directions"></ng-md-icon></md-icon>                            
+                            <input required type="number" name="pinCode" ng-model="restaurantInfoModalObj.pinCode">
+                            <div ng-messages="restaurantInfoForm.pinCode.$error">
+                                <div ng-message="required">This is required</div>
+                            </div>
+                        </md-input-container>
+                        <md-subheader>Contact Details</md-subheader>
+                        <md-input-container class="md-block">
+                            <label>Phone</label>
+                            <md-icon><ng-md-icon icon="phone"></ng-md-icon></md-icon>                            
+                            <input required name="phone1" type="tel" ng-pattern="/[0-9]{10}$/" ng-model="restaurantInfoModalObj.phone1">
+                            <div ng-messages="restaurantInfoForm.phone1.$error">
+                                <div ng-message="required">This is required</div>
+                                <div ng-message="pattern" class="my-message">Please enter valid phone number</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Phone 2</label>
+                            <md-icon><ng-md-icon icon="phone"></ng-md-icon></md-icon>                            
+                            <input name="phone2" type="tel" ng-pattern="/[0-9]{10}$/" ng-model="restaurantInfoModalObj.phone2">
+                            <div ng-messages="restaurantInfoForm.phone2.$error">
+                                <div ng-message="pattern" class="my-message">Please enter valid phone number</div>
+                            </div>
+                        </md-input-container>
+                        <md-subheader>Additional Details</md-subheader>
+                        <md-input-container class="md-block">
+                            <label>Service Tax Number</label>
+                            <md-icon><ng-md-icon icon="security"></ng-md-icon></md-icon>                            
+                            <input name="serviceTaxNumber" ng-model="restaurantInfoModalObj.serviceTaxNumber">
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Tin Number</label>
+                            <md-icon><ng-md-icon icon="security"></ng-md-icon></md-icon>                            
+                            <input name="tinNumber" ng-model="restaurantInfoModalObj.tinNumber">
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Group</label>
+                            <md-icon><ng-md-icon icon="star"></ng-md-icon></md-icon>                            
+                            <input name="group" ng-model="restaurantInfoModalObj.group">
+                        </md-input-container>
+                    </div>
+                </div>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="center center">
+            <md-button type="submit" ng-click="restaurantInfoForm.$valid && answer(true)">Save</md-button>
+            <md-button ng-click="answer(false)">Cancel</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

@@ -1,0 +1,869 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
+<!-- 2016-09-27T02:53:14 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MasterReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3d30291a-9d1d-440d-96b3-f9084b4b9e9b">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<subDataset name="itemsListDataset" uuid="1a4ecf85-c302-4d71-b34a-61814d80d9f7">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="name" class="java.lang.String"/>
+		<field name="quantity" class="java.lang.Integer"/>
+		<field name="value" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="chargesDataset" uuid="4c88d9bc-479f-4502-a4c3-dd100e8da198">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="name" class="java.lang.String"/>
+		<field name="fnb" class="in.cw.sense.api.bo.bill.dto.RateValueDto"/>
+		<field name="liquor" class="in.cw.sense.api.bo.bill.dto.RateValueDto"/>
+	</subDataset>
+	<subDataset name="taxesDataset" uuid="0bee582f-f4ae-406d-bd51-c6bb9db8799f">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="name" class="java.lang.String"/>
+		<field name="fnb" class="in.cw.sense.api.bo.bill.dto.RateValueDto"/>
+		<field name="liquor" class="in.cw.sense.api.bo.bill.dto.RateValueDto"/>
+	</subDataset>
+	<parameter name="fnbChargeDataSource" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<parameter name="fnbListDataSource" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<parameter name="fnbTaxesDataSource" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<parameter name="barListDataSource" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<parameter name="barChargeDataSource" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<parameter name="barTaxesDataSource" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="restaurantInfo" class="in.cw.sense.api.bo.restaurant.dto.RestaurantInfoDto">
+		<fieldDescription><![CDATA[restaurantInfo]]></fieldDescription>
+	</field>
+	<field name="bill" class="in.cw.sense.api.bo.bill.dto.BillDto">
+		<fieldDescription><![CDATA[bill]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="592" splitType="Stretch">
+			<frame>
+				<reportElement x="102" y="1" width="350" height="96" uuid="90c84d4d-7944-4dc0-a4ef-14e17cbdd1ed">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="85" y="10" width="180" height="14" isRemoveLineWhenBlank="true" uuid="b45b8bcc-9bcb-4e5a-99e1-31dc4225a3e2">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font size="11" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{restaurantInfo}.getName()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement positionType="Float" x="85" y="24" width="180" height="12" isRemoveLineWhenBlank="true" uuid="2cbdba8c-bb48-4da0-b9a8-effea3029e52">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{restaurantInfo}.getTagline()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement positionType="Float" x="85" y="36" width="180" height="12" isRemoveLineWhenBlank="true" uuid="609355ee-f0bf-4bc4-a372-dc9b3e02177c">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{restaurantInfo}.getAddress().getAddressLine1()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement positionType="Float" x="85" y="48" width="180" height="12" isRemoveLineWhenBlank="true" uuid="196104f1-8857-4d74-a6db-c4e1e4e8982f">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{restaurantInfo}.getAddress().getAddressLine2()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement positionType="Float" x="85" y="60" width="180" height="12" isRemoveLineWhenBlank="true" uuid="b1edde3f-ceee-4c0e-b781-21b90de20953">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{restaurantInfo}.getAddress().getCity() +" - "+$F{restaurantInfo}.getAddress().getPinCode()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement positionType="Float" x="85" y="72" width="180" height="12" isRemoveLineWhenBlank="true" uuid="22e35935-129e-484e-a441-78ddde71586b">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Phone : "+$F{restaurantInfo}.getPhone().getPhone1()]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="0" y="84" width="350" height="12" isRemoveLineWhenBlank="true" uuid="283760e2-d263-4418-a395-05af93fa82f8">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA["------------------------------------------------------------------------------------------------------------------------------------------"]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement x="102" y="97" width="350" height="48" uuid="ec20d335-e35f-4beb-9b62-bd9d634635f7">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<staticText>
+					<reportElement positionType="Float" x="75" y="0" width="40" height="12" uuid="5d9f2066-a4a4-44df-8621-288dda73d4ab">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<text><![CDATA[Bill No.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="75" y="12" width="40" height="12" uuid="e7681b87-1570-4b29-9518-d4e14f92ecb1">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<text><![CDATA[Date]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="75" y="24" width="40" height="12" uuid="1ecdacd1-5de8-4763-815a-59830e3605eb">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<text><![CDATA[Time]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="115" y="0" width="60" height="12" uuid="8358ab2c-2764-4327-b83d-a582f83e05a5">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[": "+$F{bill}.getId()]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="115" y="12" width="60" height="12" uuid="c6aa649c-f0e2-41bf-924e-a45a8ddef94c">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[": "+new SimpleDateFormat("dd-MM-yy").format($F{bill}.getSettledDateTime())]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="115" y="24" width="60" height="12" uuid="5ee44b32-eaa7-4b97-81e2-bcd8d6d68b62">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[": "+new SimpleDateFormat("h:mm a").format($F{bill}.getSettledDateTime())]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement positionType="Float" x="175" y="0" width="40" height="12" uuid="61a471ac-77e5-483a-a292-42c205096fac">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<text><![CDATA[Table No.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="175" y="12" width="40" height="12" uuid="6b1c57af-6e01-4d41-a55b-6b82401d2e34">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<text><![CDATA[Steward]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="175" y="24" width="40" height="12" uuid="99298983-f226-4e71-8393-f3ef235a488f">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<text><![CDATA[Covers]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="215" y="0" width="60" height="12" uuid="30a18478-37b8-465e-bfb8-9c0aa0118735">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[": "+$F{bill}.getTableNumber()]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="215" y="24" width="60" height="12" uuid="9b37e3f8-dd6c-4450-8254-edd2b3430bd4">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[": "+$F{bill}.getCovers()]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="215" y="12" width="60" height="12" uuid="0d8cfe0d-03e5-4250-ac30-9de68ccac40e">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[": "+$F{bill}.getPersonName()]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="0" y="36" width="350" height="12" isRemoveLineWhenBlank="true" uuid="c0d3c2a4-bb20-4f5b-af78-3b4ea6fd766a">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA["------------------------------------------------------------------------------------------------------------------------------------------"]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement positionType="Float" x="102" y="145" width="350" height="344" uuid="326ac87b-d60c-4e8d-98dc-515f2c293288"/>
+				<staticText>
+					<reportElement positionType="Float" x="75" y="0" width="100" height="12" uuid="fb8cf74f-9202-4242-b53e-7273858ab4ca">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Food and Beverage]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="75" y="12" width="140" height="12" uuid="42cef25a-767c-41f7-bf11-ae6e3c01ca89">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Item]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="215" y="12" width="25" height="12" uuid="1551f843-0fc6-4326-8e61-4f4284d67deb">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Qty]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="240" y="12" width="35" height="12" uuid="7c4577a6-8bd4-48a0-9b2b-69012aa02bba">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Value]]></text>
+				</staticText>
+				<componentElement>
+					<reportElement key="" x="75" y="24" width="200" height="12" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" uuid="019888b0-25f0-4329-b848-abe6636f9e47">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="itemsListDataset" uuid="516f8691-2a96-4894-8683-2beb14894d1a">
+							<dataSourceExpression><![CDATA[$P{fnbListDataSource}]]></dataSourceExpression>
+						</datasetRun>
+						<jr:listContents height="12" width="200">
+							<textField>
+								<reportElement x="0" y="0" width="140" height="12" uuid="c277df8b-976b-44f6-aea1-6eeeb80669d1">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Left">
+									<font size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{name}.length() > 25?$F{name}.substring(0, 20)+".....":$F{name}]]></textFieldExpression>
+							</textField>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="140" y="0" width="25" height="12" isRemoveLineWhenBlank="true" uuid="0123e875-a2fb-4451-b896-5825ed384c23">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Left"/>
+								<textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="165" y="0" width="35" height="12" uuid="5d7c22f4-0b04-4182-8fd9-15aa6c1ef679">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Right">
+									<font size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{value}]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="75" y="36" width="100" height="12" isRemoveLineWhenBlank="true" uuid="059b5d8a-106c-4a45-a5d3-58e147866165">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bill}.getDiscount().getFnb().getAmount()==null?"":"Discount"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="175" y="36" width="65" height="12" isRemoveLineWhenBlank="true" uuid="700e6edd-d360-47cf-a4fb-ceeb1b077eb8">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bill}.getDiscount().getFnb().getValue()==null?null:"@"+$F{bill}.getDiscount().getFnb().getValue()+"%"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="240" y="36" width="35" height="12" isRemoveLineWhenBlank="true" uuid="8cbd6b5b-f4a0-417b-bd72-12a485b6f3ce">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bill}.getDiscount().getFnb().getAmount()==null?null:"@"+$F{bill}.getDiscount().getFnb().getAmount()+"%"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement positionType="Float" x="215" y="48" width="25" height="12" uuid="251d6261-3cd3-4ac0-834a-3a98d0c07a83">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bill}.getItemCount().getFnb()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement positionType="Float" x="240" y="48" width="35" height="12" uuid="9f73bfd5-db26-4282-8a3c-42e73f62c89d">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bill}.getSubTotal().getFnb()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement positionType="Float" x="75" y="48" width="140" height="12" uuid="374d62c5-2643-49a7-a8f2-bdfaa7566a1e">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Sub Total]]></text>
+				</staticText>
+				<componentElement>
+					<reportElement positionType="Float" x="75" y="60" width="200" height="12" uuid="5964578b-3c55-463e-afbd-d63fef1d8316">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="chargesDataset" uuid="6fde8ffa-45d2-4a27-83d1-5e70b35c8ca6">
+							<dataSourceExpression><![CDATA[$P{fnbChargeDataSource}]]></dataSourceExpression>
+						</datasetRun>
+						<jr:listContents height="12" width="200">
+							<textField>
+								<reportElement x="0" y="0" width="100" height="12" uuid="fdf146a6-dc78-475e-a368-c66dd2d39ddb">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<textElement>
+									<font size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="100" y="0" width="65" height="12" uuid="feea9a41-575c-482c-9f88-509f7e24bb2f">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<textElement>
+									<font size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA["@"+$F{fnb}.getRate()+"%"]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="165" y="0" width="35" height="12" uuid="78d99e4e-0ebc-48ea-8d40-441d2697feaf">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Right">
+									<font size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{fnb}.getValue()]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+				<textField>
+					<reportElement positionType="Float" x="240" y="72" width="35" height="12" uuid="c28d0b8c-575b-492a-8973-c1699cbe94b3">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bill}.getSubTotalExclusive().getFnb()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement positionType="Float" x="75" y="72" width="140" height="12" uuid="25dabbb6-45fe-4639-a2c2-97f317d198fb">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total (Exc. Taxes)]]></text>
+				</staticText>
+				<componentElement>
+					<reportElement positionType="Float" x="75" y="84" width="200" height="12" uuid="a0b5fa79-7593-4bc7-bcf0-e9c31a95cf5e">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="taxesDataset" uuid="21998ede-fc7d-4edf-b914-dd13dab80b35">
+							<dataSourceExpression><![CDATA[$P{fnbTaxesDataSource}]]></dataSourceExpression>
+						</datasetRun>
+						<jr:listContents height="12" width="200">
+							<textField>
+								<reportElement x="0" y="0" width="100" height="12" uuid="fcacdccd-bb68-444b-8df1-14afc1c7231c">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<textElement>
+									<font size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="100" y="0" width="65" height="12" uuid="98dcef4b-a07e-44cc-9371-bea37be296f2">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<textElement>
+									<font size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA["@"+$F{fnb}.getRate()+"%"]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="165" y="0" width="35" height="12" uuid="5ca25e73-234b-46a7-ad3f-8011ebb19e9b">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Right">
+									<font size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{fnb}.getValue()]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+				<textField>
+					<reportElement positionType="Float" x="240" y="96" width="35" height="12" uuid="49d24a97-7ff1-4282-8f5a-500c4ce1124f">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bill}.getSubTotalInclusive().getFnb()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement positionType="Float" x="75" y="96" width="140" height="12" uuid="6af33732-d0e5-45d2-8631-aa8966dd47c3">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total (Inc. Taxes)]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="0" y="108" width="350" height="12" isRemoveLineWhenBlank="true" uuid="8c2fc456-6979-4f84-abd5-b88b0fe0e49b">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA["------------------------------------------------------------------------------------------------------------------------------------------"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement positionType="Float" x="75" y="120" width="100" height="12" uuid="4ad26c4b-472c-4c37-811b-237c2b71d028">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Bar]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="175" y="156" width="65" height="12" isRemoveLineWhenBlank="true" uuid="c6b4653e-1bcf-4994-a2bd-7c4619f8c38b">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bill}.getDiscount().getBar().getValue()==null?null:"@"+$F{bill}.getDiscount().getBar().getValue()+"%"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement positionType="Float" x="240" y="216" width="36" height="12" uuid="c63c7ba3-7569-4528-a6a3-791159e0d3fa">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bill}.getSubTotalInclusive().getLiquor()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement positionType="Float" x="75" y="216" width="140" height="12" uuid="f41109e8-2ca9-4f70-be53-893fa8f48d8e">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total (Inc. Taxes)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="75" y="132" width="140" height="12" uuid="2bb87743-a79e-4786-b5e8-b78f8a3aab1a">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Item]]></text>
+				</staticText>
+				<componentElement>
+					<reportElement positionType="Float" x="75" y="204" width="200" height="12" uuid="a86b99b9-4c3d-47ef-b91c-d6a0f8db1375">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="taxesDataset" uuid="b5431756-a1ef-4589-a0b4-cc2e2e84993d">
+							<dataSourceExpression><![CDATA[$P{barTaxesDataSource}]]></dataSourceExpression>
+						</datasetRun>
+						<jr:listContents height="12" width="200">
+							<textField>
+								<reportElement x="0" y="0" width="100" height="12" uuid="7c328dae-11a5-404a-b00b-ba6a374618ec">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<textElement>
+									<font size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="100" y="0" width="65" height="12" uuid="0af14827-28a1-42c9-8bb2-c722c91f8635">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<textElement>
+									<font size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA["@"+$F{liquor}.getRate()+"%"]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="165" y="0" width="35" height="12" uuid="f4ecc62f-fae6-40d9-bd43-5917c7626eba">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Right">
+									<font size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{liquor}.getValue()]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+				<staticText>
+					<reportElement positionType="Float" x="215" y="132" width="25" height="12" uuid="e70e2492-4641-48fd-972a-132eef5c1a1f">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Qty]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="240" y="156" width="35" height="12" isRemoveLineWhenBlank="true" uuid="fb5a2e33-dce4-468e-9bdb-a3e3e51b5afc">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bill}.getDiscount().getBar().getAmount()==null?null:"@"+$F{bill}.getDiscount().getBar().getAmount()+"%"]]></textFieldExpression>
+				</textField>
+				<componentElement>
+					<reportElement key="" positionType="Float" x="75" y="144" width="200" height="12" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" uuid="f69ef407-d0d6-4307-8f62-438281c9a882">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="itemsListDataset" uuid="bb6667ce-957a-436d-9657-35f96d3221bf">
+							<dataSourceExpression><![CDATA[$P{barListDataSource}]]></dataSourceExpression>
+						</datasetRun>
+						<jr:listContents height="12" width="200">
+							<textField>
+								<reportElement x="0" y="0" width="140" height="12" uuid="4dbb9fc5-316b-41f9-a34a-6b187859ac3c">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Left">
+									<font size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{name}.length() > 25?$F{name}.substring(0, 20)+".....":$F{name}]]></textFieldExpression>
+							</textField>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement x="140" y="0" width="25" height="12" isRemoveLineWhenBlank="true" uuid="07c46112-4a67-4637-bed2-8450090945bf">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Left"/>
+								<textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="165" y="0" width="35" height="12" uuid="f321703d-7ad1-4792-bb3d-42378184db21">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Right">
+									<font size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{value}]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+				<componentElement>
+					<reportElement positionType="Float" x="75" y="180" width="200" height="12" uuid="b5c0db75-00f3-4dd5-b9ba-1bdb17e659ad">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+						<datasetRun subDataset="chargesDataset" uuid="e6be110a-55dc-4b01-a18d-2b4034c0abc3">
+							<dataSourceExpression><![CDATA[$P{barChargeDataSource}]]></dataSourceExpression>
+						</datasetRun>
+						<jr:listContents height="12" width="200">
+							<textField>
+								<reportElement x="0" y="0" width="100" height="12" uuid="4c616fd6-0173-4136-93e9-fd204f8cff00">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<textElement>
+									<font size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="100" y="0" width="65" height="12" uuid="d1300c1b-94e4-47ba-81c8-b424d5d7ca46">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<textElement>
+									<font size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA["@"+$F{liquor}.getRate()+"%"]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="165" y="0" width="35" height="12" uuid="f586ba51-98b2-47a2-ac2e-51d55cd4ccb8">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Right">
+									<font size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{liquor}.getValue()]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
+				<textField>
+					<reportElement positionType="Float" x="215" y="168" width="25" height="12" uuid="6fbe8a64-8cb7-4835-8539-ea6bfabfe994">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bill}.getItemCount().getLiquor()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement positionType="Float" x="240" y="192" width="36" height="12" uuid="f0eecee6-4659-4121-bdaa-67ac8323a1b0">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bill}.getSubTotalExclusive().getLiquor()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement positionType="Float" x="75" y="192" width="140" height="12" uuid="4e344a1f-addc-4b09-b70a-f8b37fc82ec2">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total (Exc. Taxes)]]></text>
+				</staticText>
+				<textField>
+					<reportElement positionType="Float" x="240" y="168" width="35" height="12" uuid="751e3057-de64-4c9f-82a3-8324410fb2a0">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bill}.getSubTotal().getLiquor()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement positionType="Float" x="75" y="168" width="140" height="12" uuid="6b8cbdb0-c072-4a64-8739-53df41598b9a">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Sub Total]]></text>
+				</staticText>
+				<staticText>
+					<reportElement positionType="Float" x="240" y="132" width="35" height="12" uuid="47741ec1-023b-4782-8850-347c2d2bd1a4">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Value]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="75" y="156" width="100" height="12" isRemoveLineWhenBlank="true" uuid="94f67a32-65b5-4721-9128-604a6933e4fb">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bill}.getDiscount().getBar().getAmount()==null?"":"Discount"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="0" y="228" width="350" height="12" isRemoveLineWhenBlank="true" uuid="970fce67-fffa-4a38-8ca2-e32b0e31da64">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA["------------------------------------------------------------------------------------------------------------------------------------------"]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="0" y="252" width="350" height="12" isRemoveLineWhenBlank="true" uuid="1df5da2d-4d0c-4f6b-bea4-97d65b01d291">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA["------------------------------------------------------------------------------------------------------------------------------------------"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement positionType="Float" x="75" y="240" width="200" height="12" uuid="fcf79381-e59a-4ec7-8d48-3fa767ac10fc">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Grand Total : Rs. "+ $F{bill}.getGrandTotal()]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="75" y="264" width="200" height="12" isRemoveLineWhenBlank="true" uuid="be886206-63e0-4e62-bbfd-7b5292b0a3ff">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="6" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{restaurantInfo}.getAdditionalDetails().getServiceTaxNumber() == null?null:"ST No : "+$F{restaurantInfo}.getAdditionalDetails().getServiceTaxNumber()]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="75" y="276" width="200" height="12" isRemoveLineWhenBlank="true" uuid="5f9e7a3e-cb25-42de-9484-8220c6836d42">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="6" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{restaurantInfo}.getAdditionalDetails().getTinNumber() == null?null:"Tin No : "+$F{restaurantInfo}.getAdditionalDetails().getTinNumber()]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="0" y="288" width="350" height="12" isRemoveLineWhenBlank="true" uuid="51acc362-7d6a-4be9-8e96-9e2dfe6cc683">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{restaurantInfo}.getAdditionalDetails().getGroup() == null?null:$F{restaurantInfo}.getAdditionalDetails().getGroup()]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="0" y="300" width="350" height="12" isRemoveLineWhenBlank="true" uuid="d9af65a6-7df4-4af3-ab7f-95e662b04220">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="6" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Thank You"]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+</jasperReport>

@@ -1,0 +1,53 @@
+<md-dialog aria-label="Add Bar Item" ng-cloak style="width: 80%;">
+  <form name="addBarItemForm" novalidate autocomplete="off">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>{{addEditItemModalObj.heading}}</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon aria-label="Close dialog">
+            <i class="fa fa-times"></i>
+          </md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <div layout="row">
+            <div flex layout="column" layout-wrap layout-align="center stretch">
+                <md-input-container flex class="md-block">
+                  <label>Name</label>
+                  <md-icon><ng-md-icon icon="mode_edit"></ng-md-icon></md-icon>
+                  <input required name="name" ng-model="addEditItemModalObj.name">
+                  <div ng-messages="addBarItemForm.name.$error">
+                    <div ng-message="required">This is required</div>
+                  </div>                  
+                </md-input-container>
+                <md-input-container flex class="md-block">
+                  <md-checkbox ng-model="addEditItemModalObj.available" aria-label="Available">
+                    {{ addEditItemModalObj.available == true?'Available':'Unavailable' }}
+                  </md-checkbox>
+                </md-input-container>
+                <md-input-container flex class="md-block">
+                  <label>Price</label>
+                  <md-icon><i class="fa fa-pencil-square-o" aria-hidden="true"></i></md-icon>
+                  <input required name="price" type="number" ng-model="addEditItemModalObj.price">
+                  <div ng-messages="addBarItemForm.price.$error">
+                    <div ng-message="required">This is required</div>
+                  </div>
+                </md-input-container>                
+                <md-input-container class="md-block">
+                  <label>Description</label>
+                  <md-icon><ng-md-icon icon="mode_edit"></ng-md-icon></md-icon>
+                  <textarea name="description" ng-model="addEditItemModalObj.description" md-maxlength="500"></textarea>
+                </md-input-container>
+            </div>
+        </div>
+      </div>           
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-align="center center">
+      <md-button type="submit" ng-click="addBarItemForm.$valid && answer(true)">Save</md-button>
+      <md-button ng-click="answer(false)">Cancel</md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

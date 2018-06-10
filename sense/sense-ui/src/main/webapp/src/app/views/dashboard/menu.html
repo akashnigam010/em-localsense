@@ -1,0 +1,38 @@
+<div class="col-md-12" ng-init="fetchMenu('fnb')">
+    <md-content>
+        <md-tabs md-selected="selectedIndex" md-dynamic-height md-border-bottom>
+            <md-tab ng-repeat="category in categories" label="{{category.name}}" ng-click="getItemsFromMap(category)">
+            </md-tab>
+        </md-tabs>
+        <div id="subCategoryDiv">
+            <!-- <div flex layout="column" layout-padding style="background: azure;">
+                <h4 flex="80" class="panel-title">
+                  Veg                                                          
+                </h4>
+                <div layout="row" layout-wrap style="padding: 0px;">           
+                    <md-card md-whiteframe="4" flex="10" layout="column" class="item-card">
+                        <md-card-title flex="85" class="card-title">
+                            Chicken Masala
+                        </md-card-title>
+                        <md-card-actions flex="15" layout="row">
+                            <div flex>
+                                <i class="fa fa-inr" aria-hidden="true">220</i>
+                            </div>
+                            <div flex>
+                                <p align="right">2</p>
+                            </div>
+                        </md-card-actions>
+                    </md-card>
+                </div>
+            </div> -->
+        </div>
+        <div id="itemsDiv" layout="row" layout-wrap layout-padding>            
+        </div>              
+        <md-button class="md-fab md-warn" ng-click="toggleMenu()" aria-label="toggle menu" style="bottom: 20px; position: fixed;" ng-if="isBarAvailable">
+            {{menuType == 'fnb'?'BAR':'FNB'}}
+        </md-button>
+        <md-button class="md-fab md-accent" ng-click="redirect('/orderSummary')" aria-label="ordered items" style="bottom: 20px; right: 20px; position: fixed;">
+            {{totalItems}}&nbsp<i class="fa fa-angle-double-right" aria-hidden="true"></i>
+        </md-button>
+    </md-content>
+</div>
